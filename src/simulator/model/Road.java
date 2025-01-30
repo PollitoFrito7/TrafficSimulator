@@ -1,5 +1,7 @@
 package simulator.model;
 
+import java.util.List;
+
 public abstract class Road extends SimulatedObject{
 	private String _id;
 	private Junction _srcJunct;
@@ -10,7 +12,7 @@ public abstract class Road extends SimulatedObject{
 	private int _contLimit;
 	private Weather _weather;
 	private int _totalContamination;
-	private List<vehicle> _vehicles;
+	private List<Vehicle> _vehicles;
 	
 	Road(String id, Junction srcJunct, Junction destJunct, int maxSpeed, int contLimit, int length, Weather weather) {
 		super(id);
