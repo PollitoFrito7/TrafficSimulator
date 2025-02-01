@@ -18,9 +18,9 @@ public abstract class Road extends SimulatedObject{
 		super(id);
 		_srcJunct = srcJunct; //TODO: add the road to the junction once Junction class is implemented
 		_destJunct = destJunct; //TODO: add the road to the junction once Junction class is implemented
-		if (length <= 0 ) throw new IllegalArgumentException("the length of the road must be positive."); 
+		if (length <= 0 ) throw new IllegalArgumentException("The length of the road must be positive."); 
 		else _length = length;
-		if (maxSpeed <= 0) throw new IllegalArgumentException("the maximun speed of the road must be positive.");
+		if (maxSpeed <= 0) throw new IllegalArgumentException("The maximum speed of the road must be positive.");
 		else _maxSpeed = maxSpeed;
 		_curMaxSpeed = maxSpeed;
 		_contLimit = contLimit;
