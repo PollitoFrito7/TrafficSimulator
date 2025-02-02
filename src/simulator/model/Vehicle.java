@@ -41,17 +41,32 @@ public class Vehicle extends SimulatedObject {
 	
 	protected void setContaminationClass(int c) {
 		if(c < 0 || c > 10) throw new IllegalArgumentException("The contamination cannot be set properly.");
-		else setContClass(c);
+		else _contaminationClass = c;
+		// setContClass does the same as above in the else statement
 	}
 	
 
 	@Override
 	protected void advance(int time) {
-		while(_status ==_status.TRAVELING) {
+		while (_status ==_status.TRAVELING) {
 			// take length field from Road class
-			_location = Math.min(_location + _currentSpeed, _road); 
+			int _newLocation = 0;
+			_newLocation = Math.min(_location + _currentSpeed, _road.getLength());
+			
+			if(_newLocation> _road.getLength()) {
+				_newLocation = _road.getLength();
+			}
+			
+			int l = _totalTraveledDist;		// variable d or l?
+			_totalTraveledDist = _newLocation - _location;
+			
+			int c = 0; // ?¿?¿?¿?¿
+			setContaminationClass(l);
+	
+			
+			
+			
 		}
-		
 	}
 
 	protected void moveToNextRoad() {
@@ -94,6 +109,8 @@ public class Vehicle extends SimulatedObject {
 	
 	
 	// additional setters declared as private
+	
+	// this method is equivalent to say _contaminationClass = c in the method setContaminationClass
 	private void setContClass(int _contaminationClass) {
 		this._contaminationClass = _contaminationClass;
 	}
