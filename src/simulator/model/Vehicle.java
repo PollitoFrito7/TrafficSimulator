@@ -1,47 +1,143 @@
 package simulator.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
 import org.json.JSONObject;
 
 public class Vehicle extends SimulatedObject {
-
-//	itinerary List<Junction>
+	private List<Junction> _itinerary;
 	private int _maximumSpeed;
 	private int _currentSpeed;
-
-	VehicleStatus status;
-//	Road road;
+	private VehicleStatus _status;
+	private Road _road;
 	private int _location = 0;
+	private String _id;
 
-	// number between 0 and 10
+	//initialize(?¿)
 	private int _contaminationClass = 0;
-	private int _totalContamination;
-	private int _totalTraveledDist;
+	private int _totalContamination = 0;
+	private int _totalTraveledDist = 0;
 
 	protected Vehicle(String id, int maxSpeed, int contClass, List<Junction> itinerary) {
 		super(id);
-		// id not empty string
 		
-		// maxSpeed > 0
-		
-		// contClass number between 0 and 10
-		
-		// length of itinerary at least 2
-		
-		// 
+		if(id.isEmpty()) throw new IllegalArgumentException("The string cannot be empty.");
+		else _id = id;
+		if(maxSpeed <= 0) throw new IllegalArgumentException("The maximum speed must be positive.");
+		else _maximumSpeed = maxSpeed;
+		if(0 > contClass || contClass > 10) throw new IllegalArgumentException("The contamination class must be a number between 0 and 10 (both inclusive");
+		else setContaminationClass(contClass);
+		if(itinerary == null || itinerary.size() != 2) throw new IllegalArgumentException("The length of the list must be at least 2");
+		else setItinerary(Collections.unmodifiableList(new ArrayList<>(itinerary)));
 	}
+	
+
+	protected void setSpeed(int s) {
+		if(s < 0) throw new IllegalArgumentException("The speed cannot be negative.");
+		else _currentSpeed = Math.min(s, _maximumSpeed);
+		
+	}
+	
+	protected void setContaminationClass(int c) {
+		if(c < 0 || c > 10) throw new IllegalArgumentException("The contamination cannot be set properly.");
+		else _contaminationClass = c;
+		// setContClass does the same as above in the else statement
+	}
+	
 
 	@Override
-	void advance(int time) {
-		// TODO Auto-generated method stub
-
+	protected void advance(int time) {
+		while (_status ==_status.TRAVELING) {
+			// take length field from Road class
+			int _newLocation = 0;
+			_newLocation = Math.min(_location + _currentSpeed, _road.getLength());
+			
+			if(_newLocation> _road.getLength()) {
+				_newLocation = _road.getLength();
+			}
+			
+			int l = _totalTraveledDist;		// variable d or l?
+			_totalTraveledDist = _newLocation - _location;
+			
+			int c = 0; // ?¿?¿?¿?¿
+			setContaminationClass(l);
+	
+			
+			
+			
+		}
 	}
 
-	@Override
+	protected void moveToNextRoad() {
+		
+	}
+
+	
+	// see which type of modifier suits better with getters and setters 
+	public int getLocation() {
+		return _location;
+	}
+
+	public int getCurrentSpeed() {
+		return _currentSpeed;
+	}
+	
+	public int getContClass() {
+		return _contaminationClass;
+	}
+	
+	public int getMaxSpeed() {
+		return _maximumSpeed;
+	}
+	
+	public VehicleStatus getStatus() {
+		return _status;
+	}
+	
+	public int getTotalCO2() {
+		return _totalContamination;
+	}
+
+	public List<Junction> getItinerary() {
+		return _itinerary;
+	}
+	
+	public Road getRoad() {
+		return _road;
+	}
+	
+	
+	// additional setters declared as private
+	
+	// this method is equivalent to say _contaminationClass = c in the method setContaminationClass
+	private void setContClass(int _contaminationClass) {
+		this._contaminationClass = _contaminationClass;
+	}
+	
+	private void setItinerary(List<Junction> _itinerary) {
+		this._itinerary = _itinerary;
+	}
+	
+	
+	
+	
+	
+	
+	/*
+	 * @Override
 	public JSONObject report() {
-		// TODO Auto-generated method stub
-		return null;
+		JSONObject o = new JSONObject();
+		
+		return o.put("patata", "yes");
 	}
+	
+	 * 
+	 * 
+	 * */
+ 	
+	
+
+	
 
 }
