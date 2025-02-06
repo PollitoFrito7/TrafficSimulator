@@ -13,8 +13,6 @@ public class Vehicle extends SimulatedObject {
 	private Road _road;
 	private int _location = 0;
 	private String _id;
-
-	//initialize(?¿)
 	private int _contaminationClass = 0;
 	private int _totalContamination = 0;
 	private int _totalTraveledDist = 0;
@@ -48,8 +46,7 @@ public class Vehicle extends SimulatedObject {
 
 	@Override
 	protected void advance(int time) {
-		while (_status ==_status.TRAVELING) {
-			// take length field from Road class
+		while (_status == VehicleStatus.TRAVELING) {
 			int _newLocation = 0;
 			_newLocation = Math.min(_location + _currentSpeed, _road.getLength());
 			
@@ -57,12 +54,23 @@ public class Vehicle extends SimulatedObject {
 				_newLocation = _road.getLength();
 			}
 			
-			int l = _totalTraveledDist;		// variable d or l?
+			int d = _totalTraveledDist;
 			_totalTraveledDist = _newLocation - _location;
 			
-			int c = 0; // ?¿?¿?¿?¿
-			setContaminationClass(l);
-	
+			int f = _contaminationClass;
+			int c = d * f;
+			
+			_totalContamination += c;
+			_road.addContamination(f);
+			
+			if(_newLocation == _road.getLength()) {
+				// enter function of Junction class
+				_status = VehicleStatus.PENDING;
+				_currentSpeed = 0;
+//			It is recommended to keep track of the index of the last junction encountered
+//			This starts at 0 and is incremented by 1 when entering a junction's queue
+				
+			}
 			
 			
 			
@@ -70,6 +78,7 @@ public class Vehicle extends SimulatedObject {
 	}
 
 	protected void moveToNextRoad() {
+		if(_status == VehicleStatus.ARRIVED || _status == VehicleStatus.TRAVELING) throw new IllegalArgumentException("The status must be pending or waiting.");
 		
 	}
 
