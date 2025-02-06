@@ -1,5 +1,7 @@
 package simulator.model;
 
+import java.util.List;
+
 import org.json.JSONObject;
 
 public abstract class SimulatedObject {
@@ -21,8 +23,10 @@ public abstract class SimulatedObject {
 	public String toString() {
 		return _id;
 	}
+	
+	protected abstract void advance(int time);
 
-	abstract void advance(int time);
+	public abstract JSONObject report();
+	
 
-	abstract public JSONObject report();
 }
