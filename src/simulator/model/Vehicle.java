@@ -120,12 +120,12 @@ public class Vehicle extends SimulatedObject {
 	// additional setters declared as private
 	
 	// this method is equivalent to say _contaminationClass = c in the method setContaminationClass
-	private void setContClass(int _contaminationClass) {
-		this._contaminationClass = _contaminationClass;
+	private void setContClass(int contaminationClass) {
+		_contaminationClass = contaminationClass;
 	}
 	
-	private void setItinerary(List<Junction> _itinerary) {
-		this._itinerary = _itinerary;
+	private void setItinerary(List<Junction> itinerary) {
+		_itinerary = itinerary;
 	}
 	
 	
