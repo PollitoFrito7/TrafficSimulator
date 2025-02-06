@@ -1,8 +1,10 @@
 package simulator.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public abstract class Road extends SimulatedObject{
@@ -11,10 +13,10 @@ public abstract class Road extends SimulatedObject{
 	private Junction _destJunct;
 	private int _length;
 	private int _maxSpeed;
-	private int _curMaxSpeed;
+	protected int _curMaxSpeed;
 	private int _contLimit;
 	private Weather _weather;
-	private int _totalContamination;
+	protected int _totalContamination;
 	private List<Vehicle> _vehicles = new ArrayList<Vehicle>(); // ArrayList chosen due to the high amount of accesses to specific vehicles
 	
 	Road(String id, Junction srcJunct, Junction destJunct, int maxSpeed, int contLimit, int length, Weather weather) {
@@ -26,7 +28,7 @@ public abstract class Road extends SimulatedObject{
 		else _destJunct = destJunct; //TODO: add the road to the junction once Junction class is implemented
 		
 		if (length <= 0 ) throw new IllegalArgumentException("The length of the road must be positive."); 
-		else setLength(length);
+		else _length = length;
 		
 		if (maxSpeed <= 0) throw new IllegalArgumentException("The maximum speed of the road must be positive.");
 		else _maxSpeed = maxSpeed;
@@ -45,24 +47,46 @@ public abstract class Road extends SimulatedObject{
 	public int getLength() {
 		return _length;
 	}
-
-	private void setLength(int length) {
-		_length = length;
+	
+	public Junction getDest() {
+		return _destJunct;
+	}
+	
+	public Junction getSrc() {
+		return _srcJunct;
+	}
+	
+	public Weather getWeather() {
+		return _weather;
+	}
+	
+	public int getContLimit() {
+		return _contLimit;
+	}
+	
+	public int getMaxSpeed() {
+		return _maxSpeed;
+	}
+	
+	public int getTotalCO2() {
+		return _totalContamination;
+	}
+	
+	public int getSpeedLimit() {
+		return _curMaxSpeed;
+	}
+	
+	public List<Vehicle> getVehicles() {
+		return Collections.unmodifiableList(_vehicles);
 	}
 
 	protected void enter(Vehicle v) {
 		_vehicles.add(v);
-		_vehicles.sort((vehicle1, vehicle2) -> { //TODO: Ask whether we have to sort the list after adding vehicles
-			Vehicle v1 = (Vehicle) vehicle1;
-			Vehicle v2 = (Vehicle) vehicle2;
-			if (v1.getLocation() > v2.getLocation()) return 1;
-			if (v1.getLocation() < v2.getLocation()) return -1;
-			return 0;
-		});
+		
 	}
 	
 	protected void exit(Vehicle v) {
-		_vehicles.remove(v); //TODO: this only works if every vehicle is different, ask for info		
+		_vehicles.remove(v); 	
 	}
 	
 	protected void setWeather(Weather w) {
@@ -94,8 +118,8 @@ public abstract class Road extends SimulatedObject{
 		_vehicles.sort((vehicle1, vehicle2) -> {
 			Vehicle v1 = (Vehicle) vehicle1;
 			Vehicle v2 = (Vehicle) vehicle2;
-			if (v1.getLocation() > v2.getLocation()) return 1;
-			if (v1.getLocation() < v2.getLocation()) return -1;
+			if (v1.getLocation() > v2.getLocation()) return -1; //descending order
+			if (v1.getLocation() < v2.getLocation()) return 1;
 			return 0;
 		});
 	}
@@ -109,6 +133,12 @@ public abstract class Road extends SimulatedObject{
 		road.put("Speedlimit", _curMaxSpeed);
 		road.put("Weather",  _weather);
 		road.put("co2", _totalContamination);
+		JSONArray vehicles = new JSONArray();
+		
+		for (Vehicle v : _vehicles)
+			vehicles.put(v.getId());
+		
+		road.put("vehicles", vehicles);
 		
 		return road;		
 	}
