@@ -9,15 +9,19 @@ public class Junction extends SimulatedObject {
 	private List<Road> _inRoads;
 	private List<List<Vehicle>> _queues;
 	private Map<Road, List<Vehicle>> _queueByRoad;
-	private Map<Junction, Road> _outRoadByJunction;
-	private int _greenLightIndex;
+	private Map<Junction, Road> _outRoads;
+	private int _greenLight;
 	private int _lastSwitchingTime;
-	private LightSwitchingStrategy _lss;
-	private DequeuingStrategy _dqs;
+	private LightSwitchingStrategy _lsStrategy;
+	private DequeuingStrategy _dqStrategy;
+	private int _xCoord;
+	private int _yCoord;
 	
 	Junction(String id, LightSwitchingStrategy lsStrategy, DequeuingStrategy dqStrategy) {
 		super(id);
-		// TODO Auto-generated constructor stub
+		_lsStrategy = lsStrategy;
+		_dqStrategy = dqStrategy;
+		
 	}
 	
 	protected void addIncommingRoad(Road r) {
