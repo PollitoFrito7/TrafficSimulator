@@ -88,14 +88,11 @@ public class Vehicle extends SimulatedObject {
 			_currentSpeed = 0;
 			_road = null;
 		} else {
-			_itinerary.get(_lastJunctionEncountered).roadTo();
-	
+			_itinerary.get(_lastJunctionEncountered).roadTo(_itinerary.get(_lastJunctionEncountered + 1));	
 			_road.enter(this);
 			_status = VehicleStatus.TRAVELING;
 			_location = 0;
 		}
-		
-
 	}
 
 	// see which type of modifier suits better with getters and setters
@@ -131,24 +128,26 @@ public class Vehicle extends SimulatedObject {
 		return _road;
 	}
 
-	// additional setters declared as private
-
-	// this method is equivalent to say _contaminationClass = c in the method
-	// setContaminationClass
-	/*
-	 * private void setContClass(int contaminationClass) { _contaminationClass =
-	 * contaminationClass; }
-	 * 
-	 */
-
 	private void setItinerary(List<Junction> itinerary) {
 		_itinerary = itinerary;
 	}
 
 	@Override
 	public JSONObject report() {
-		// TODO Auto-generated method stub
-		return null;
+		JSONObject vehicle = new JSONObject();
+		
+		vehicle.put("Id", _id);
+		vehicle.put("Speed", _currentSpeed);
+		vehicle.put("Distance", _totalTraveledDist);
+		vehicle.put("CO2", _totalContamination);
+		vehicle.put("Class", _contaminationClass);
+		vehicle.put("Status", _status);
+		if(_status != VehicleStatus.PENDING || _status!= VehicleStatus.ARRIVED) {
+			vehicle.put("Road", _road);
+			vehicle.put("Location", _location);
+		}
+		
+		return vehicle;
 	}
 
 
