@@ -59,6 +59,21 @@ public abstract class Road extends SimulatedObject {
 	 * @Override
 	public JSONObject report() {
 		
+<<<<<<< Updated upstream
+=======
+		road.put("Id", _id);
+		road.put("Speedlimit", _curMaxSpeed);
+		road.put("Weather",  _weather);
+		road.put("co2", _totalContamination);
+		JSONArray vehicles = new JSONArray();
+		
+		for (Vehicle v : _vehicles)
+			vehicles.put(v.getId());
+		
+		road.put("vehicles", vehicles);
+		
+		return road;		
+>>>>>>> Stashed changes
 	}
 	 * */
 	
