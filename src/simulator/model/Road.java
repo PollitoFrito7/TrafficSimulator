@@ -17,15 +17,15 @@ public abstract class Road extends SimulatedObject{
 	private int _contLimit;
 	private Weather _weather;
 	protected int _totalContamination;
-	private List<Vehicle> _vehicles = new ArrayList<Vehicle>(); // ArrayList chosen due to the high amount of accesses to specific vehicles
+	private List<Vehicle> _vehicles;
 	
 	Road(String id, Junction srcJunct, Junction destJunct, int maxSpeed, int contLimit, int length, Weather weather) {
 		super(id);
-		if (srcJunct == null) throw new IllegalArgumentException("The junction can't be NULL"); 
-		else _srcJunct = srcJunct; //TODO: add the road to the junction once Junction class is implemented
-		
-		if (destJunct == null) throw new IllegalArgumentException("The junction can't be NULL");
-		else _destJunct = destJunct; //TODO: add the road to the junction once Junction class is implemented
+		if (srcJunct == null || destJunct == null) throw new IllegalArgumentException("The junctions can't be NULL"); 
+		else {
+			_srcJunct = srcJunct; //TODO: add the road to the junction once Junction class is implemented
+			_destJunct = destJunct; //TODO: add the road to the junction once Junction class is implemented
+		}
 		
 		if (length <= 0 ) throw new IllegalArgumentException("The length of the road must be positive."); 
 		else _length = length;
@@ -41,7 +41,9 @@ public abstract class Road extends SimulatedObject{
 		if (weather == null) throw new IllegalArgumentException("The weather can't be NULL");
 		else _weather = weather;
 		
-		_totalContamination = 0;		
+		_totalContamination = 0;
+		
+		_vehicles = new ArrayList<Vehicle>(); // ArrayList chosen due to the high amount of accesses to specific vehicles
 	}
 	
 	public int getLength() {
