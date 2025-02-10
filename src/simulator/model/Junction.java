@@ -62,7 +62,10 @@ public class Junction extends SimulatedObject {
 	
 	@Override
 	protected void advance(int time) {
-		_dqStrategy.dequeue(_queues.get(_greenLightIndex));
+		List<Vehicle> dequedVehicles = _dqStrategy.dequeue(_queues.get(_greenLightIndex));
+		for (Vehicle v : dequedVehicles) {
+			v.moveToNextRoad();
+		}
 		_lsStrategy.chooseNextGreen(_inRoads, _queues, _greenLightIndex, _lastSwitchingTime, time);
 	}
 
