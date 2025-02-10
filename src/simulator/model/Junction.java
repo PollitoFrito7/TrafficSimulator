@@ -1,5 +1,8 @@
 package simulator.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,49 +15,55 @@ public class Junction extends SimulatedObject {
 	private Map<Junction, Road> _outRoadByJunction;
 	private int _greenLightIndex;
 	private int _lastSwitchingTime;
-	private LightSwitchingStrategy _lss;
-	private DequeuingStrategy _dqs;
+	private LightSwitchingStrategy _lsStrategy;
+	private DequeuingStrategy _dqStrategy;
+	@SuppressWarnings("unused")
+	private int _xCoord;
+	@SuppressWarnings("unused")
+	private int _yCoord; 
 	
 	Junction(String id, LightSwitchingStrategy lsStrategy, DequeuingStrategy dqStrategy, int xCoor, int yCoor) {
 		super(id);
-<<<<<<< Updated upstream
-		// TODO Auto-generated constructor stub
-=======
+		
+		_inRoads = new ArrayList<Road>();
+		_queues = new ArrayList<List<Vehicle>>(); // TODO: Ask if the type of the inner list can be changed only to accept arraydeques
+		_queueByRoad = new HashMap<Road, List<Vehicle>>();
+		_outRoadByJunction = new HashMap<Junction, Road>();
+		_greenLightIndex = -1;
+		_lastSwitchingTime = 0;
+		
 		if(lsStrategy == null || dqStrategy == null) throw new IllegalArgumentException("The strategies cannot be null.");
-		else {
-			_lsStrategy = lsStrategy;
-			_dqStrategy = dqStrategy;
-		}
+		_lsStrategy = lsStrategy;
+		_dqStrategy = dqStrategy;
+		
 		if(xCoor == 0 || yCoor == 0) throw new IllegalArgumentException("The coordinates cannot have negative values.");
-		else {
-			_xCoord = xCoor;
-			_yCoord = yCoor;
-		}
->>>>>>> Stashed changes
+		_xCoord = xCoor;
+		_yCoord = yCoor;
 	}
 	
 	protected void addIncommingRoad(Road r) {
-		
-		
+		if (!r.getDest().equals(this)) throw new IllegalArgumentException("This junction must be the destination of the road");	//TODO: Ask if we can create our own Exceptions
 		_inRoads.add(r);
-		
+		_queues.add(new LinkedList<Vehicle>());
+		_queueByRoad.put(r, _queues.get(_queues.size() - 1));
 	}
 	
 	protected void addOutgoingRoad(Road r) {
-		
+		_outRoadByJunction.put(r.getDest(), r);
 	}
 	
 	protected void enter(Vehicle v) {
-		
+		_queueByRoad.get(v.getRoad()).add(v);
 	}
 	
 	protected Road roadTo(Junction j) {
-		return null;
+		return _outRoadByJunction.get(j);
 	}
 	
 	@Override
 	protected void advance(int time) {
-		
+		_dqStrategy.dequeue(_queues.get(_greenLightIndex));
+		_lsStrategy.chooseNextGreen(_inRoads, _queues, _greenLightIndex, _lastSwitchingTime, time);
 	}
 
 	@Override
@@ -62,10 +71,4 @@ public class Junction extends SimulatedObject {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	/*
-	@Override
-	public void JSONObject report() {
-		return null;
-	}*/
 }
