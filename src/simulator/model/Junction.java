@@ -9,22 +9,34 @@ public class Junction extends SimulatedObject {
 	private List<Road> _inRoads;
 	private List<List<Vehicle>> _queues;
 	private Map<Road, List<Vehicle>> _queueByRoad;
-	private Map<Junction, Road> _outRoads;
-	private int _greenLight;
+	private Map<Junction, Road> _outRoadByJunction;
+	private int _greenLightIndex;
 	private int _lastSwitchingTime;
-	private LightSwitchingStrategy _lsStrategy;
-	private DequeuingStrategy _dqStrategy;
-	private int _xCoord;
-	private int _yCoord;
+	private LightSwitchingStrategy _lss;
+	private DequeuingStrategy _dqs;
 	
-	Junction(String id, LightSwitchingStrategy lsStrategy, DequeuingStrategy dqStrategy) {
+	Junction(String id, LightSwitchingStrategy lsStrategy, DequeuingStrategy dqStrategy, int xCoor, int yCoor) {
 		super(id);
-		_lsStrategy = lsStrategy;
-		_dqStrategy = dqStrategy;
-		
+<<<<<<< Updated upstream
+		// TODO Auto-generated constructor stub
+=======
+		if(lsStrategy == null || dqStrategy == null) throw new IllegalArgumentException("The strategies cannot be null.");
+		else {
+			_lsStrategy = lsStrategy;
+			_dqStrategy = dqStrategy;
+		}
+		if(xCoor == 0 || yCoor == 0) throw new IllegalArgumentException("The coordinates cannot have negative values.");
+		else {
+			_xCoord = xCoor;
+			_yCoord = yCoor;
+		}
+>>>>>>> Stashed changes
 	}
 	
 	protected void addIncommingRoad(Road r) {
+		
+		
+		_inRoads.add(r);
 		
 	}
 	
