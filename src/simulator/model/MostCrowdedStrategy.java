@@ -35,10 +35,8 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
 				int index = (currGreen + i) % numIncomingRoads;
 				
 				if(qs.get(index).size() > maximalSize) {
-					do {
-						maximalSize = qs.get(index).size();
-						roadWithMaxQueue = index;
-					} while (roadWithMaxQueue != currGreen);		// considering only incoming red roads?
+					maximalSize = qs.get(index).size();
+					roadWithMaxQueue = index;
 				}	
 			}
 			return roadWithMaxQueue;

@@ -15,12 +15,28 @@ public class Junction extends SimulatedObject {
 	private LightSwitchingStrategy _lss;
 	private DequeuingStrategy _dqs;
 	
-	Junction(String id, LightSwitchingStrategy lsStrategy, DequeuingStrategy dqStrategy) {
+	Junction(String id, LightSwitchingStrategy lsStrategy, DequeuingStrategy dqStrategy, int xCoor, int yCoor) {
 		super(id);
+<<<<<<< Updated upstream
 		// TODO Auto-generated constructor stub
+=======
+		if(lsStrategy == null || dqStrategy == null) throw new IllegalArgumentException("The strategies cannot be null.");
+		else {
+			_lsStrategy = lsStrategy;
+			_dqStrategy = dqStrategy;
+		}
+		if(xCoor == 0 || yCoor == 0) throw new IllegalArgumentException("The coordinates cannot have negative values.");
+		else {
+			_xCoord = xCoor;
+			_yCoord = yCoor;
+		}
+>>>>>>> Stashed changes
 	}
 	
 	protected void addIncommingRoad(Road r) {
+		
+		
+		_inRoads.add(r);
 		
 	}
 	
