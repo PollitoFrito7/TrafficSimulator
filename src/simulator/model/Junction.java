@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Junction extends SimulatedObject {
@@ -71,7 +72,14 @@ public class Junction extends SimulatedObject {
 
 	@Override
 	public JSONObject report() {
-		// TODO Auto-generated method stub
+		JSONObject junction = new JSONObject();
+		
+		junction.put("Id", _id);		// junction id
+//		junction.put("Green", ((SimulatedObject) _inRoads).getId());	// wtf bitch
+		
+		
+		
+		
 		return null;
 	}
 }

@@ -46,6 +46,10 @@ public abstract class Road extends SimulatedObject{
 		_vehicles = new ArrayList<Vehicle>(); // ArrayList chosen due to the high amount of accesses to specific vehicles
 	}
 	
+	public String getId() {
+		return _id;
+	}
+	
 	public int getLength() {
 		return _length;
 	}
@@ -131,16 +135,16 @@ public abstract class Road extends SimulatedObject{
 	public JSONObject report() {
 		JSONObject road = new JSONObject();
 		
-		road.put(_id, _id);
+		road.put("Id", _id);
 		road.put("Speedlimit", _curMaxSpeed);
 		road.put("Weather",  _weather);
-		road.put("co2", _totalContamination);
+		road.put("CO2", _totalContamination);
 		JSONArray vehicles = new JSONArray();
 		
 		for (Vehicle v : _vehicles)
 			vehicles.put(v.getId());
 		
-		road.put("vehicles", vehicles);
+		road.put("Vehicles", vehicles);
 		
 		return road;		
 	}
