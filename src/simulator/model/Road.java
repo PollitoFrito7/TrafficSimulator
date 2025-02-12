@@ -60,10 +60,16 @@ public abstract class Road extends SimulatedObject {
 	public JSONObject report() {
 		
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
 		road.put("Id", _id);
 		road.put("Speedlimit", _curMaxSpeed);
 		road.put("Weather",  _weather);
+=======
+		road.put("id", _id);
+		road.put("speedlimit", _curMaxSpeed);
+		road.put("weather",  _weather);
+>>>>>>> Stashed changes
 		road.put("co2", _totalContamination);
 		JSONArray vehicles = new JSONArray();
 		

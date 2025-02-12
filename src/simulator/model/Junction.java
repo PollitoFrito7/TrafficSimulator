@@ -59,7 +59,16 @@ public class Junction extends SimulatedObject {
 
 	@Override
 	public JSONObject report() {
+<<<<<<< Updated upstream
 		// TODO Auto-generated method stub
+=======
+		JSONObject junction = new JSONObject();
+		
+		
+		
+		
+		
+>>>>>>> Stashed changes
 		return null;
 	}
 	
