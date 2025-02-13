@@ -47,7 +47,7 @@ public class RoadMap {
 		
 		// road from the i-th junction to the (i + 1)-th junction
 		for(int i = 0; i < _junctionList.size() - 1; i++) {
-			if(v.getItinerary().get(i).roadTo(v.getItinerary().get(i+1)) == null) throw new IllegalArgumentException("You suck ass");
+			if(v.getItinerary().get(i).roadTo(v.getItinerary().get(i+1)) == null) throw new IllegalArgumentException("No road connects these junctions");
 		}
 		
 		_vehiclesList.add(v);
