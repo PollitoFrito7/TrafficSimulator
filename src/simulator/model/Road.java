@@ -148,8 +148,5 @@ public abstract class Road extends SimulatedObject{
 		
 		return road;		
 	}
-	
-	
-
-	
+		
 }

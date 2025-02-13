@@ -5,7 +5,7 @@ import java.util.List;
 public class RoundRobinStrategy implements LightSwitchingStrategy {
 	private int _timeSlot;
 
-	RoundRobinStrategy(int timeSlot) {
+	public RoundRobinStrategy(int timeSlot) {
 		_timeSlot = timeSlot;
 	}
 
