@@ -136,15 +136,15 @@ public class Vehicle extends SimulatedObject {
 	public JSONObject report() {
 		JSONObject vehicle = new JSONObject();
 		
-		vehicle.put("Id", _id);
-		vehicle.put("Speed", _currentSpeed);
-		vehicle.put("Distance", _totalTraveledDist);
-		vehicle.put("CO2", _totalContamination);
-		vehicle.put("Class", _contaminationClass);
-		vehicle.put("Status", _status);
+		vehicle.put("id", _id);
+		vehicle.put("speed", _currentSpeed);
+		vehicle.put("distance", _totalTraveledDist);
+		vehicle.put("co2", _totalContamination);
+		vehicle.put("class", _contaminationClass);
+		vehicle.put("status", _status);
 		if(_status != VehicleStatus.PENDING || _status!= VehicleStatus.ARRIVED) {
-			vehicle.put("Road", _road);
-			vehicle.put("Location", _location);
+			vehicle.put("road", _road);
+			vehicle.put("location", _location);
 		}
 		
 		return vehicle;

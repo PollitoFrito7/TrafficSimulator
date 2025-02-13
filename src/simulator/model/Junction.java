@@ -74,8 +74,8 @@ public class Junction extends SimulatedObject {
 	public JSONObject report() {
 		JSONObject junction = new JSONObject();
 		
-		junction.put("Id", _id);		// junction id
-		junction.put("Green", _inRoads.get(_greenLightIndex).getId());
+		junction.put("id", _id);		
+		junction.put("green", _inRoads.get(_greenLightIndex).getId());
 		JSONArray queues = new JSONArray();
 		
 		for (int i = 0; i < _queues.size(); i++) {

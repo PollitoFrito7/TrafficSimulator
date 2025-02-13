@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class RoadMap {
@@ -31,24 +32,26 @@ public class RoadMap {
 	protected void addJunction(Junction j) {
 		_junctionList.add(j);		// end of the list
 		_junctMap.put(j.getId(), j);
-		
 	}
 	
 	protected void addRoad(Road r) {
-		// HashMaps do not have duplicated keys nor null values?
-		// recorrer lista
-		
+		if (_roadsMap.containsKey(r.getId())) throw new IllegalArgumentException("There exists a road with the same ID.");
+		if(!_roadsMap.containsKey(r.getSrc()) || !_roadsMap.containsKey(r.getDest())) 
+			throw new IllegalArgumentException("Source/Destination junction is not in the RoadMap.");
 		_roadsList.add(r);
 		_roadsMap.put(r.getId(), r);
-		// tiene que existir el source y el destination
-		// more implementation sweetie
 	}
 	
 	protected void addVehicle(Vehicle v) {
+		if(_vehiclesMap.containsKey(v.getId())) throw new IllegalArgumentException("There exists a vehicle with the same ID.");
+		
+		// road from the i-th junction to the (i + 1)-th junction
+		for(int i = 0; i < _junctionList.size() - 1; i++) {
+			if(v.getItinerary().get(i).roadTo(v.getItinerary().get(i+1)) == null) throw new IllegalArgumentException("You suck ass");
+		}
+		
 		_vehiclesList.add(v);
 		_vehiclesMap.put(v.getId(), v);
-		
-		// more implementation sweetie
 	}
 	
 	public Junction getJunction(String id) {
@@ -66,7 +69,7 @@ public class RoadMap {
 	}
 	
 	public List<Junction> getJunctions(){
-		return Collections.unmodifiableList(_junctionList);
+		return Collections.unmodifiableList(new ArrayList<>(_junctionList));
 	}
 	
 	public List<Road> getRoads(){
@@ -89,9 +92,23 @@ public class RoadMap {
 	
 	public JSONObject report() {
 		JSONObject roadMap = new JSONObject();
+		JSONArray junctArray = new JSONArray();
+		JSONArray roadArray = new JSONArray();
+		JSONArray vehicleArray = new JSONArray();
 		
+	
+		for(int i = 0; i < _junctionList.size(); i++) {
+			junctArray.put(roadMap.put("junctions", _junctionList.get(i).report()));
+		}
 		
-		return null;
+		for(int i = 0; i < _roadsList.size(); i++) {
+			roadArray.put(roadMap.put("road", _roadsList.get(i).report()));
+		}
+		for(int i = 0; i < _vehiclesList.size(); i++) {
+			vehicleArray.put(roadMap.put("vehicles", _vehiclesList.get(i).report()));
+		}
+		
+		return roadMap;
 	}
 	
 }
