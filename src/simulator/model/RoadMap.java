@@ -36,7 +36,7 @@ public class RoadMap {
 	
 	protected void addRoad(Road r) {
 		if (_roadsMap.containsKey(r.getId())) throw new IllegalArgumentException("There exists a road with the same ID.");
-		if(!_roadsMap.containsKey(r.getSrc()) || !_roadsMap.containsKey(r.getDest())) 
+		if(!_junctMap.containsKey(r.getSrc().getId()) || !_junctMap.containsKey(r.getDest().getId())) 
 			throw new IllegalArgumentException("Source/Destination junction is not in the RoadMap.");
 		_roadsList.add(r);
 		_roadsMap.put(r.getId(), r);
