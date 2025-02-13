@@ -22,24 +22,24 @@ public abstract class Road extends SimulatedObject{
 	Road(String id, Junction srcJunct, Junction destJunct, int maxSpeed, int contLimit, int length, Weather weather) {
 		super(id);
 		if (srcJunct == null || destJunct == null) throw new IllegalArgumentException("The junctions can't be NULL"); 
-		else {
-			_srcJunct = srcJunct; //TODO: add the road to the junction once Junction class is implemented
-			_destJunct = destJunct; //TODO: add the road to the junction once Junction class is implemented
-		}
+		_srcJunct = srcJunct;
+		srcJunct.addOutgoingRoad(this);
+		_destJunct = destJunct; 
+		destJunct.addIncommingRoad(this);	
 		
 		if (length <= 0 ) throw new IllegalArgumentException("The length of the road must be positive."); 
-		else _length = length;
+		_length = length;
 		
 		if (maxSpeed <= 0) throw new IllegalArgumentException("The maximum speed of the road must be positive.");
-		else _maxSpeed = maxSpeed;
+		_maxSpeed = maxSpeed;
 		
 		_curMaxSpeed = maxSpeed;
 		
 		if (contLimit <= 0) throw new IllegalArgumentException("The maximum contamination must be positive");
-		else _contLimit = contLimit;
+		_contLimit = contLimit;
 		
 		if (weather == null) throw new IllegalArgumentException("The weather can't be NULL");
-		else _weather = weather;
+		_weather = weather;
 		
 		_totalContamination = 0;
 		
