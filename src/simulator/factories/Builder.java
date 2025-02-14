@@ -3,8 +3,8 @@ package simulator.factories;
 import org.json.JSONObject;
 
 public abstract class Builder<T> {
-	private String _type_tag;
-	private String _desc;
+	private String _type_tag;	// matches the type field of JSON struct
+	private String _desc;	// descr obj created by this builder
 
 	public Builder(String typeTag, String desc) {
 		if (typeTag == null || desc == null || typeTag.isBlank() || desc.isBlank())
@@ -24,12 +24,13 @@ public abstract class Builder<T> {
 		info.put("desc", _desc);
 
 		JSONObject data = new JSONObject();
-		fill_in_fata(data);
+		fill_in_data(data);
 		info.put("data", data);
 		return info;
 	}
 
-	protected void fill_in_fata(JSONObject o) {
+	// subclasses override this method to fill in 
+	protected void fill_in_data(JSONObject o) {
 	}
 
 	@Override
