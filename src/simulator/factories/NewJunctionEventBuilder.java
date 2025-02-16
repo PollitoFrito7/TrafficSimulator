@@ -1,7 +1,5 @@
 package simulator.factories;
 
-import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,7 +19,6 @@ public class NewJunctionEventBuilder extends Builder<Event>{
 		_dqsFactory = dqsFactory;
 	}
 
-	@Override
 	protected void fill_in_data(JSONObject o) {
 		o.put("time", "The time at which the event is executed");
 		o.put("id", "The ID of the new junction");
@@ -32,7 +29,6 @@ public class NewJunctionEventBuilder extends Builder<Event>{
 //		"dq_strategy" : { "type" : "move_first_dqs",  "data" : {} }
 		o.put("dq_strategy", "This is the dq_strategy");
 	}
-	
 	
 	@Override
 	protected NewJunctionEvent create_instance(JSONObject data) {
