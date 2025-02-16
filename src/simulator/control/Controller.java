@@ -17,8 +17,11 @@ public class Controller {
 	private Factory<Event> _eventsFactory;
 	
 	public Controller(TrafficSimulator sim, Factory<Event> eventsFactory) {
-		_sim = sim;
-		_eventsFactory = eventsFactory;
+		if(sim == null | eventsFactory == null) throw new IllegalArgumentException("The values cannot be null");
+		else {
+			_sim = sim;
+			_eventsFactory = eventsFactory;			
+		}
 	}
 	
 	public void loadEvents(InputStream in) {
