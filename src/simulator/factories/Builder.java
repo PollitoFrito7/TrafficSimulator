@@ -29,8 +29,13 @@ public abstract class Builder<T> {
 		return info;
 	}
 
+<<<<<<< Updated upstream
 	// subclasses override this method to fill in 
 	protected void fill_in_data(JSONObject o) {
+=======
+	protected void fill_in_Data(JSONObject o) {
+		
+>>>>>>> Stashed changes
 	}
 
 	@Override
