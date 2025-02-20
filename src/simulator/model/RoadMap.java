@@ -30,6 +30,7 @@ public class RoadMap {
 	}
 
 	protected void addJunction(Junction j) {
+		if (_junctMap.containsKey(j.getId())) throw new IllegalArgumentException("There exists a junction with the same name");
 		_junctionList.add(j);		// end of the list
 		_junctMap.put(j.getId(), j);
 	}
@@ -46,7 +47,7 @@ public class RoadMap {
 		if(_vehiclesMap.containsKey(v.getId())) throw new IllegalArgumentException("There exists a vehicle with the same ID.");
 		
 		// road from the i-th junction to the (i + 1)-th junction
-		for(int i = 0; i < _junctionList.size() - 1; i++) {
+		for(int i = 0; i < (v.getItinerary().size() - 1); i++) {
 			if(v.getItinerary().get(i).roadTo(v.getItinerary().get(i+1)) == null) throw new IllegalArgumentException("No road connects these junctions");
 		}
 		

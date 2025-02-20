@@ -8,7 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public abstract class Road extends SimulatedObject{
-	private String _id;
 	private Junction _srcJunct;
 	private Junction _destJunct;
 	private int _length;
@@ -23,8 +22,8 @@ public abstract class Road extends SimulatedObject{
 		super(id);
 		if (srcJunct == null || destJunct == null) throw new IllegalArgumentException("The junctions can't be NULL"); 
 		_srcJunct = srcJunct;
-		srcJunct.addOutgoingRoad(this);
 		_destJunct = destJunct; 
+		srcJunct.addOutgoingRoad(this);
 		destJunct.addIncommingRoad(this);	
 		
 		if (length <= 0 ) throw new IllegalArgumentException("The length of the road must be positive."); 
@@ -117,7 +116,7 @@ public abstract class Road extends SimulatedObject{
 		updateSpeedLimit();
 		
 		for (Vehicle v : _vehicles) {
-			calculateVehicleSpeed(v);
+			v.setSpeed(calculateVehicleSpeed(v));
 			v.advance(time);
 		}
 		
@@ -137,14 +136,14 @@ public abstract class Road extends SimulatedObject{
 		
 		road.put("id", _id);
 		road.put("speedlimit", _curMaxSpeed);
-		road.put("2eather",  _weather);
+		road.put("weather",  _weather);
 		road.put("co2", _totalContamination);
 		JSONArray vehicles = new JSONArray();
 		
 		for (Vehicle v : _vehicles)
 			vehicles.put(v.getId());
 		
-		road.put("Vehicles", vehicles);
+		road.put("vehicles", vehicles);
 		
 		return road;		
 	}

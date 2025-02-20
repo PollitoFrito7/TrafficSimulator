@@ -21,7 +21,7 @@ public class SetContClassEvent extends Event {
 			Vehicle vehicle = map.getVehicle(p.getFirst());
 			if (vehicle == null)
 				throw new IllegalArgumentException("A listed road does not exist in the simulation");
-			vehicle.setContaminationClass(p.getSecond());
+			vehicle.setContClass(p.getSecond());
 		}
 	}
 

@@ -37,19 +37,19 @@ public class Junction extends SimulatedObject {
 		_lsStrategy = lsStrategy;
 		_dqStrategy = dqStrategy;
 		
-		if(xCoor == 0 || yCoor == 0) throw new IllegalArgumentException("The coordinates cannot have negative values.");
+		if(xCoor < 0 || yCoor < 0) throw new IllegalArgumentException("The coordinates cannot have negative values.");
 		_xCoord = xCoor;
 		_yCoord = yCoor;
 	}
 	
 	protected void addIncommingRoad(Road r) {
-		if (!r.getDest().equals(this)) throw new IllegalArgumentException("This junction must be the destination of the road");	//TODO: Ask if we can create our own Exceptions
 		_inRoads.add(r);
 		_queues.add(new LinkedList<Vehicle>());
 		_queueByRoad.put(r, _queues.get(_queues.size() - 1));
 	}
 	
 	protected void addOutgoingRoad(Road r) {
+		if (!r.getSrc().equals(this)) throw new IllegalArgumentException("This junction must be the destination of the road");	//TODO: Ask if we can create our own Exceptions
 		_outRoadByJunction.put(r.getDest(), r);
 	}
 	
@@ -74,8 +74,11 @@ public class Junction extends SimulatedObject {
 	public JSONObject report() {
 		JSONObject junction = new JSONObject();
 		
-		junction.put("id", _id);		
-		junction.put("green", _inRoads.get(_greenLightIndex).getId());
+		junction.put("id", _id);
+		if (_greenLightIndex == -1)
+			junction.put("green", "none");
+		else
+			junction.put("green", _inRoads.get(_greenLightIndex).getId());
 		JSONArray queues = new JSONArray();
 		
 		for (int i = 0; i < _queues.size(); i++) {

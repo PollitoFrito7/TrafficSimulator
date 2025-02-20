@@ -30,8 +30,7 @@ public class InterCityRoad extends Road {
 			weatherDependance = 0;
 			break;
 		}
-
-		_totalContamination = ((100 - weatherDependance) * getTotalCO2()) / 100;
+		_totalContamination = Math.max(((100 - weatherDependance) * getTotalCO2()) / 100, 0);	
 	}
 
 	@Override

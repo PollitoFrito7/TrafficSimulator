@@ -23,7 +23,7 @@ public class CityRoad extends Road{
 			break;
 		}
 		
-		_totalContamination -= weatherDependance;		
+		_totalContamination = Math.max(_totalContamination - weatherDependance, 0);		
 	}
 
 	@Override

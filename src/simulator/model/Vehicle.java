@@ -24,11 +24,12 @@ public class Vehicle extends SimulatedObject {
 		if (id.isEmpty())
 			throw new IllegalArgumentException("The string cannot be empty.");
 		else _id = id;
+		_status = VehicleStatus.PENDING;
 		if (maxSpeed <= 0) throw new IllegalArgumentException("The maximum speed must be positive.");
 		else _maximumSpeed = maxSpeed;
 		if (0 > contClass || contClass > 10)
 			throw new IllegalArgumentException("The contamination class must be a number between 0 and 10 (both inclusive");
-		else setContaminationClass(contClass);
+		else setContClass(contClass);
 		if (itinerary == null || itinerary.size() != 2)
 			throw new IllegalArgumentException("The length of the list must be at least 2");
 		else setItinerary(Collections.unmodifiableList(new ArrayList<>(itinerary)));
@@ -37,16 +38,16 @@ public class Vehicle extends SimulatedObject {
 	protected void setSpeed(int s) {
 		if (s < 0)
 			throw new IllegalArgumentException("The speed cannot be negative.");
-		else
+		else if (_status == VehicleStatus.TRAVELING)
 			_currentSpeed = Math.min(s, _maximumSpeed);
 
 	}
 
-	protected void setContaminationClass(int c) {
+	protected void setContClass(int c) {
 		if (c < 0 || c > 10)
 			throw new IllegalArgumentException("The contamination cannot be set properly.");
 		else
-			_contaminationClass += c;
+			_contaminationClass = c;
 		// setContClass does the same as above in the else statement
 	}
 
@@ -56,29 +57,27 @@ public class Vehicle extends SimulatedObject {
 			return;
 
 //			maybe put some of this in separated functions?¿
-		int _newLocation = 0;
-		_newLocation = Math.min(_location + _currentSpeed, _road.getLength());
+		int newLocation = Math.min(_location + _currentSpeed, _road.getLength());
 
-		int d = _totalTraveledDist;
-		_totalTraveledDist = _newLocation - _location;
-
-		int f = _contaminationClass;
-		int c = d * f;
+		int d = newLocation - _location;
+		_totalTraveledDist += d;
+		_location = newLocation;
+		int c = d * _contaminationClass;
 
 		_totalContamination += c;
-		_road.addContamination(f);
+		_road.addContamination(c);
 
-		if (_newLocation == _road.getLength()) {
+		if (newLocation == _road.getLength()) {
 			_itinerary.get(_lastJunctionEncountered).enter(this);
 			_status = VehicleStatus.PENDING;
 			_currentSpeed = 0;
 			_lastJunctionEncountered++;
-
+			_location = 0;
 		}
 	}
 
 	protected void moveToNextRoad() {
-		if (_status != VehicleStatus.PENDING || _status != VehicleStatus.WAITING)
+		if (_status != VehicleStatus.PENDING && _status != VehicleStatus.WAITING)
 			throw new IllegalArgumentException("The status must be pending or waiting.");
 		else if (_road != null || _lastJunctionEncountered > 0) {
 			_road.exit(this);
@@ -88,7 +87,7 @@ public class Vehicle extends SimulatedObject {
 			_currentSpeed = 0;
 			_road = null;
 		} else {
-			_itinerary.get(_lastJunctionEncountered).roadTo(_itinerary.get(_lastJunctionEncountered + 1));	
+			_road = _itinerary.get(_lastJunctionEncountered).roadTo(_itinerary.get(_lastJunctionEncountered + 1));	
 			_road.enter(this);
 			_status = VehicleStatus.TRAVELING;
 			_location = 0;
@@ -100,7 +99,7 @@ public class Vehicle extends SimulatedObject {
 		return _location;
 	}
 
-	public int getCurrentSpeed() {
+	public int getSpeed() {
 		return _currentSpeed;
 	}
 
@@ -142,7 +141,7 @@ public class Vehicle extends SimulatedObject {
 		vehicle.put("co2", _totalContamination);
 		vehicle.put("class", _contaminationClass);
 		vehicle.put("status", _status);
-		if(_status != VehicleStatus.PENDING || _status!= VehicleStatus.ARRIVED) {
+		if(_status != VehicleStatus.PENDING && _status!= VehicleStatus.ARRIVED) {
 			vehicle.put("road", _road);
 			vehicle.put("location", _location);
 		}

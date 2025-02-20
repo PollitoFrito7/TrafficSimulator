@@ -9,7 +9,7 @@ public class TrafficSimulator {
 	private Queue<Event> _events;
 	private int _simulationTime;
 	
-	TrafficSimulator() {
+	public TrafficSimulator() {
 		_roadMap = new RoadMap();
 		_events = new PriorityQueue<>();
 		_simulationTime = 0;
@@ -22,11 +22,9 @@ public class TrafficSimulator {
 	public void advance() {
 		_simulationTime++;
 		
-		for (Event e: _events) {
-			if (e.getTime() == _simulationTime) {
-				e.execute(_roadMap);
-				_events.remove(e);
-			}
+		while(_events.element().getTime() == _simulationTime) {
+			_events.element().execute(_roadMap);
+			_events.remove();
 		}
 		
 		for (Junction j : _roadMap.getJunctions()) {
