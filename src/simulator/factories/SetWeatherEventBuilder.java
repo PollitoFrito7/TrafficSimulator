@@ -17,7 +17,7 @@ public class SetWeatherEventBuilder extends Builder<Event>{
 		super("set_weather", "Set the weather of the event");
 	}
 	
-	protected void fill_in_data(JSONObject o) {
+	protected void fill_in_Data(JSONObject o) {
 		o.put("time", "The time at which the event is executed");
 		o.put("info", "The information of the road and the weather");
 	}

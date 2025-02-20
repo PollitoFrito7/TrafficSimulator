@@ -40,7 +40,9 @@ public class BuilderBasedFactory<T> implements Factory<T> {
 
 	@Override	
 	public T create_instance(JSONObject info) {
-		if(info == null) throw new IllegalArgumentException("'info' cannot be null");
+		if(info == null) {
+			throw new IllegalArgumentException("'info' cannot be null");
+		}
 		
 		String type = info.getString("type");
         Builder<T> builder = _builders.get(type);

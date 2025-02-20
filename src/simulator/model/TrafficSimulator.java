@@ -22,9 +22,17 @@ public class TrafficSimulator {
 	public void advance() {
 		_simulationTime++;
 		
+<<<<<<< HEAD
 		while(_events.element().getTime() == _simulationTime) {
 			_events.element().execute(_roadMap);
 			_events.remove();
+=======
+		for (Event e: _events) {
+			if (e.getTime() == _simulationTime) {
+				e.execute(_roadMap);
+				_events.remove(e);
+			}
+>>>>>>> Vehicle
 		}
 		
 		for (Junction j : _roadMap.getJunctions()) {
