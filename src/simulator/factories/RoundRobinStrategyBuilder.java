@@ -13,11 +13,7 @@ public class RoundRobinStrategyBuilder extends Builder<LightSwitchingStrategy>{
 	
 	@Override
 	protected void fill_in_Data(JSONObject o) {
-<<<<<<< HEAD
-		o.put("timeSlot" , "The amount of ticks a road can be with a green light");
-=======
 		o.put("timeslot" , "The amount of ticks a road can be with a green light");
->>>>>>> Vehicle
 	}
 
 	@Override

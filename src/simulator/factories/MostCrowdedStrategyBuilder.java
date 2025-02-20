@@ -8,11 +8,7 @@ import simulator.model.MostCrowdedStrategy;
 public class MostCrowdedStrategyBuilder extends Builder<LightSwitchingStrategy>{
 
 	public MostCrowdedStrategyBuilder() {
-<<<<<<< HEAD
-		super("round_robin_lss", "A new round robin strategy");
-=======
 		super("most_crowded_lss", "A new most crowded strategy");
->>>>>>> Vehicle
 	}
 	
 	@Override
