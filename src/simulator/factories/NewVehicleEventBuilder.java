@@ -15,7 +15,7 @@ public class NewVehicleEventBuilder extends Builder<Event>{
 		super("new_vehicle", "A new vehicle");
 	}
 
-	protected void fill_in_data(JSONObject o) {
+	protected void fill_in_Data(JSONObject o) {
 		o.put("time", "The time at which the event in executed");
 		o.put("id", "The ID of the new vehicle");
 		o.put("maxspeed", "The vehicle's max speed");

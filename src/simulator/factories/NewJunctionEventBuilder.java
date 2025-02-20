@@ -19,7 +19,7 @@ public class NewJunctionEventBuilder extends Builder<Event>{
 		_dqsFactory = dqsFactory;
 	}
 
-	protected void fill_in_data(JSONObject o) {
+	protected void fill_in_Data(JSONObject o) {
 		o.put("time", "The time at which the event is executed");
 		o.put("id", "The ID of the new junction");
 		o.put("coor", "The coordinates of the new junction");
