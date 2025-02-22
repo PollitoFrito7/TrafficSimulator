@@ -22,12 +22,19 @@ public class TrafficSimulator {
 	public void advance() {
 		_simulationTime++;
 		
+<<<<<<< Updated upstream
 		for (Event e: _events) {
 			if (e.getTime() == _simulationTime) {
 				e.execute(_roadMap);
 				_events.remove(e);
 			}
 		}
+=======
+		while(!_events.isEmpty() && _events.element().getTime() == _simulationTime) {
+			_events.element().execute(_roadMap);
+			_events.remove();
+		}			
+>>>>>>> Stashed changes
 		
 		for (Junction j : _roadMap.getJunctions()) {
 			j.advance(_simulationTime);
