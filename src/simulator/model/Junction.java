@@ -69,7 +69,7 @@ public class Junction extends SimulatedObject {
 				v.moveToNextRoad();
 			}			
 		}
-		_lsStrategy.chooseNextGreen(_inRoads, _queues, _greenLightIndex, _lastSwitchingTime, time);
+		_greenLightIndex = _lsStrategy.chooseNextGreen(_inRoads, _queues, _greenLightIndex, _lastSwitchingTime, time);
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class Junction extends SimulatedObject {
 			JSONArray vehicles = new JSONArray();
 			for (int j = 0; i < _queueByRoad.get(_inRoads.get(i)).size(); j++)
 				vehicles.put(_queueByRoad.get(_inRoads.get(i)).get(j).getId()); //TODO: ask whether we have to put the vehicle id or just enumerate the vehicles
-			qi.put(_id, vehicles);
+			qi.put("vehicles", vehicles);
 			queues.put(qi);
 		}
 		

@@ -99,19 +99,19 @@ public class RoadMap {
 		
 	
 		for(int i = 0; i < _junctionList.size(); i++) {
-			roadMap.put(junctArray.put("junctions", _junctionList.get(i).report()));
+			junctArray.put(_junctionList.get(i).report());
 		}
 		
 		roadMap.put("junctions", junctArray);
 		
 		for(int i = 0; i < _roadsList.size(); i++) {
-			roadArray.put(roadMap.put("roads", _roadsList.get(i).report()));
+			roadArray.put(_roadsList.get(i).report());
 		}
 		
 		roadMap.put("roads", roadArray);
 		
 		for(int i = 0; i < _vehiclesList.size(); i++) {
-			vehicleArray.put(roadMap.put("vehicles", _vehiclesList.get(i).report()));
+			vehicleArray.put(_vehiclesList.get(i).report());
 		}
 		
 		roadMap.put("vehicles", vehicleArray);
