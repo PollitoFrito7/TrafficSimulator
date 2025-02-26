@@ -30,7 +30,7 @@ public class Vehicle extends SimulatedObject {
 		if (0 > contClass || contClass > 10)
 			throw new IllegalArgumentException("The contamination class must be a number between 0 and 10 (both inclusive");
 		else setContClass(contClass);
-		if (itinerary == null || itinerary.size() != 2)
+		if (itinerary == null || itinerary.size() < 2)
 			throw new IllegalArgumentException("The length of the list must be at least 2");
 		else setItinerary(Collections.unmodifiableList(new ArrayList<>(itinerary)));
 	}
@@ -68,10 +68,10 @@ public class Vehicle extends SimulatedObject {
 		_road.addContamination(c);
 
 		if (newLocation == _road.getLength()) {
+			_lastJunctionEncountered++;
 			_itinerary.get(_lastJunctionEncountered).enter(this);
 			_status = VehicleStatus.PENDING;
 			_currentSpeed = 0;
-			_lastJunctionEncountered++;
 			_location = 0;
 		}
 	}
@@ -140,9 +140,9 @@ public class Vehicle extends SimulatedObject {
 		vehicle.put("distance", _totalTraveledDist);
 		vehicle.put("co2", _totalContamination);
 		vehicle.put("class", _contaminationClass);
-		vehicle.put("status", _status);
+		vehicle.put("status", _status.toString());
 		if(_status != VehicleStatus.PENDING && _status!= VehicleStatus.ARRIVED) {
-			vehicle.put("road", _road);
+			vehicle.put("road", _road.getId());
 			vehicle.put("location", _location);
 		}
 		

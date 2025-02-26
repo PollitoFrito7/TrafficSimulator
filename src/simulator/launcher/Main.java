@@ -26,6 +26,7 @@ import simulator.factories.MoveFirstStrategyBuilder;
 import simulator.factories.NewCityRoadEventBuilder;
 import simulator.factories.NewInterCityRoadEventBuilder;
 import simulator.factories.NewJunctionEventBuilder;
+import simulator.factories.NewVehicleEventBuilder;
 import simulator.factories.RoundRobinStrategyBuilder;
 import simulator.factories.SetWeatherEventBuilder;
 import simulator.factories.SetContClassEventBuilder;
@@ -125,6 +126,7 @@ public class Main {
 		ebs.add(new NewInterCityRoadEventBuilder());
 		ebs.add(new SetWeatherEventBuilder());
 		ebs.add(new SetContClassEventBuilder());
+		ebs.add(new NewVehicleEventBuilder());
 		_eventsFactory = new BuilderBasedFactory<>(ebs);
 	}
 

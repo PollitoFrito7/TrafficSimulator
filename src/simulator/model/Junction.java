@@ -87,8 +87,8 @@ public class Junction extends SimulatedObject {
 			JSONObject qi = new JSONObject();
 			qi.put("road", _inRoads.get(i).getId());
 			JSONArray vehicles = new JSONArray();
-			for (int j = 0; i < _queueByRoad.get(_inRoads.get(i)).size(); j++)
-				vehicles.put(_queueByRoad.get(_inRoads.get(i)).get(j).getId()); //TODO: ask whether we have to put the vehicle id or just enumerate the vehicles
+			for (int j = 0; j < _queueByRoad.get(_inRoads.get(i)).size(); j++)
+				vehicles.put(_queueByRoad.get(_inRoads.get(i)).get(j).getId()); 
 			qi.put("vehicles", vehicles);
 			queues.put(qi);
 		}

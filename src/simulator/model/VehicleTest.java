@@ -79,6 +79,9 @@ class VehicleTest {
 		JSONObject jo = new JSONObject(s);
 		
 		JSONObject report = v1.report();
+		
+		System.out.println(jo);
+		System.out.println(report);
 		assertTrue(jo.similar(report));
 		
 		assertEquals("v1", v1.getId());
