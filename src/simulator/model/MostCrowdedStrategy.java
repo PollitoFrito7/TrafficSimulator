@@ -10,39 +10,39 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
 	}
 
 	@Override
-	public int chooseNextGreen(List<Road> roads, List<List<Vehicle>> qs, int currGreen, int lastSwitchingTime, int currTime) {
+	public int chooseNextGreen(List<Road> roads, List<List<Vehicle>> qs, int currGreen, int lastSwitchingTime,
+			int currTime) {
 		int maximalSize = 0;
 		int roadWithMaxQueue = 0;
 
 		if (roads.isEmpty())
 			return -1;
-		if (currGreen == -1) { // red lights are -1
-			for (int i = 0; i < qs.size(); i++) { // iterate through array of vehicles
+		if (currGreen == -1) {
+			for (int i = 0; i < qs.size(); i++) {
 				if (qs.get(i).size() > maximalSize) {
 					maximalSize = qs.get(i).size();
-					roadWithMaxQueue = i; // picks the first one that finds during the search
+					roadWithMaxQueue = i;
 				}
 			}
-			return roadWithMaxQueue; // return index of the road with the largest queue
+			return roadWithMaxQueue;
 		}
 
 		if (currTime - lastSwitchingTime < _timeSlot) {
 			return currGreen;
-		} else {	// traverse circularly the list
+		} else {
 			int numIncomingRoads = roads.size();
-			
-			for (int i = 1; i < numIncomingRoads; i++) {		
+
+			for (int i = 1; i < numIncomingRoads; i++) {
 				int index = (currGreen + i) % numIncomingRoads;
-//				i = (currGreen + 1) % numIncomingRoads; i != currGreen; i = (i + 1) % numIncomingRoads;
-				
-				if(qs.get(index).size() > maximalSize) {
+
+				if (qs.get(index).size() > maximalSize) {
 					maximalSize = qs.get(index).size();
 					roadWithMaxQueue = index;
-				}	
+				}
 			}
 			return roadWithMaxQueue;
-		}		
-		
+		}
+
 	}
 
 }

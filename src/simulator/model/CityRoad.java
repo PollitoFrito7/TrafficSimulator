@@ -1,6 +1,6 @@
 package simulator.model;
 
-public class CityRoad extends Road{
+public class CityRoad extends Road {
 
 	CityRoad(String id, Junction srcJunct, Junction destJunct, int maxSpeed, int contLimit, int length,
 			Weather weather) {
@@ -10,8 +10,8 @@ public class CityRoad extends Road{
 	@Override
 	protected void reduceTotalContamination() {
 		int weatherDependance;
-	
-		switch(getWeather()) {
+
+		switch (getWeather()) {
 		case STORM:
 			weatherDependance = 10;
 			break;
@@ -22,17 +22,17 @@ public class CityRoad extends Road{
 			weatherDependance = 2;
 			break;
 		}
-		
-		_totalContamination = Math.max(_totalContamination - weatherDependance, 0);		
+
+		_totalContamination = Math.max(_totalContamination - weatherDependance, 0);
 	}
 
 	@Override
 	protected void updateSpeedLimit() {
-		_curMaxSpeed = getMaxSpeed();		
+		_curMaxSpeed = getMaxSpeed();
 	}
 
 	@Override
 	protected int calculateVehicleSpeed(Vehicle v) {
-		return (11 - v.getContClass())* _curMaxSpeed / 11;
+		return (11 - v.getContClass()) * _curMaxSpeed / 11;
 	}
 }

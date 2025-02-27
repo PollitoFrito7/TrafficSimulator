@@ -6,7 +6,7 @@ import simulator.model.Event;
 import simulator.model.NewInterCityRoadEvent;
 import simulator.model.Weather;
 
-public class NewInterCityRoadEventBuilder extends Builder<Event>{
+public class NewInterCityRoadEventBuilder extends Builder<Event> {
 
 	public NewInterCityRoadEventBuilder() {
 		super("new_inter_city_road", "A new inter city road");
@@ -22,7 +22,7 @@ public class NewInterCityRoadEventBuilder extends Builder<Event>{
 		o.put("maxspeed", "The maximum speed that the new city road can have");
 		o.put("weather", "The weather in the new city road");
 	}
-	
+
 	@Override
 	protected NewInterCityRoadEvent create_instance(JSONObject data) {
 		int time = data.getInt("time");
@@ -32,10 +32,9 @@ public class NewInterCityRoadEventBuilder extends Builder<Event>{
 		int length = data.getInt("length");
 		int co2Limit = data.getInt("co2limit");
 		int maxSpeed = data.getInt("maxspeed");
-		Weather weather = Weather.valueOf(data.getString("weather"));	// declaring type is static
-		
+		Weather weather = Weather.valueOf(data.getString("weather"));
+
 		return new NewInterCityRoadEvent(time, id, srcJunct, destJunct, length, co2Limit, maxSpeed, weather);
 	}
 
 }
-

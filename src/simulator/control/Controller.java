@@ -15,46 +15,47 @@ import simulator.model.TrafficSimulator;
 public class Controller {
 	private TrafficSimulator _sim;
 	private Factory<Event> _eventsFactory;
-	
+
 	public Controller(TrafficSimulator sim, Factory<Event> eventsFactory) {
-		if(sim == null | eventsFactory == null) throw new IllegalArgumentException("The values cannot be null");
+		if (sim == null | eventsFactory == null)
+			throw new IllegalArgumentException("The values cannot be null");
 		else {
 			_sim = sim;
-			_eventsFactory = eventsFactory;			
+			_eventsFactory = eventsFactory;
 		}
 	}
-	
+
 	public void loadEvents(InputStream in) {
 		JSONObject jo = new JSONObject(new JSONTokener(in));
 		JSONArray events = jo.getJSONArray("events");
-		for (int i = 0; i <  events.length(); i++) {
+		for (int i = 0; i < events.length(); i++) {
 			_sim.addEvent(_eventsFactory.create_instance(events.getJSONObject(i)));
 		}
 	}
-	
+
 	public void run(int n, OutputStream out) {
 		PrintStream p = new PrintStream(out);
-		
-		// print "{" to 'p'
-		// print "  \"states\": [" to 'p'
+
+		p.print("{");
+		p.print("  \"states\": [");
 
 		// loop for the first n-1 states (to print comma after each state)
 		for (int i = 0; i < n - 1; i++) {
-		    _sim.advance();
-		    p.print(_sim.report());
-		    p.println(",");
+			_sim.advance();
+			p.print(_sim.report());
+			p.println(",");
 		}
 
 		// last step, only if 'n > 0'
 		if (n > 0) {
-		    _sim.advance();
-		    p.print(_sim.report());
+			_sim.advance();
+			p.print(_sim.report());
 		}
 
-		// print "]" to 'p'
-		// print "}" to 'p'
+		p.print("]");
+		p.print("}");
 	}
-	
+
 	public void reset() {
 		_sim.reset();
 	}
