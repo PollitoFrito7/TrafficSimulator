@@ -9,20 +9,28 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
 		_timeSlot = timeSlot;
 	}
 
+	private int checkMaximalSize(int idx, List<List<Vehicle>> qs) {
+		int maximalSize = 0;
+		int roadWithMaxQueue = 0;
+		
+		if (qs.get(idx).size() > maximalSize) {
+			maximalSize = qs.get(idx).size();
+			roadWithMaxQueue = idx;
+		}
+		
+		return roadWithMaxQueue;
+	}
+	
 	@Override
 	public int chooseNextGreen(List<Road> roads, List<List<Vehicle>> qs, int currGreen, int lastSwitchingTime,
 			int currTime) {
-		int maximalSize = 0;
 		int roadWithMaxQueue = 0;
 
 		if (roads.isEmpty())
 			return -1;
 		if (currGreen == -1) {
 			for (int i = 0; i < qs.size(); i++) {
-				if (qs.get(i).size() > maximalSize) {
-					maximalSize = qs.get(i).size();
-					roadWithMaxQueue = i;
-				}
+				checkMaximalSize(i, qs);
 			}
 			return roadWithMaxQueue;
 		}
@@ -35,10 +43,7 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
 			for (int i = 1; i < numIncomingRoads; i++) {
 				int index = (currGreen + i) % numIncomingRoads;
 
-				if (qs.get(index).size() > maximalSize) {
-					maximalSize = qs.get(index).size();
-					roadWithMaxQueue = index;
-				}
+				checkMaximalSize(index, qs);
 			}
 			return roadWithMaxQueue;
 		}
