@@ -162,10 +162,18 @@ public class UsageExample {
 		JSONObject joFromString = new JSONObject(jsonString);
 
 		// build a JSONObject from a file
-		
+		JSONObject joFromFile1 = new JSONObject(
+				new JSONTokener(new FileInputStream(new File("resources/other/json-example-1.json"))));
+		JSONObject joFromFile2 = new JSONObject(
+				new JSONTokener(new FileInputStream(new File("resources/other/json-example-2.json"))));
+		JSONObject joFromFile3 = new JSONObject(
+				new JSONTokener(new FileInputStream(new File("resources/other/json-example-3.json"))));
 
 		accessExample(joFromString);
-		
+		accessExample(joFromFile1);
+		accessExample(joFromFile2);
+		accessExample(joFromFile3);
+
 		// Example 2: compare two JSON structures
 		//
 		System.out.println();
@@ -174,7 +182,13 @@ public class UsageExample {
 		System.out.println("=======================");
 		System.out.println();
 
-		
+		System.out.println(
+				"Are joFromString and joFromFile1 simrilar? " + checkSemanticEquality(joFromString, joFromFile1));
+		System.out.println(
+				"Are joFromString and joFromFile2 simrilar? " + checkSemanticEquality(joFromString, joFromFile2));
+		System.out.println(
+				"Are joFromString and joFromFile3 simrilar? " + checkSemanticEquality(joFromString, joFromFile3));
+		System.out.println();
 
 		// Example 3: create JSON structure
 		//
@@ -182,7 +196,7 @@ public class UsageExample {
 
 		// Example 3: remove a key
 		//
-	
+		removeKey(joFromFile1, "e");
 	}
 
 }
