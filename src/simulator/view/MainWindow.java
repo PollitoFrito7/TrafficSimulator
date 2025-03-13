@@ -91,7 +91,7 @@ public class MainWindow extends JFrame {
 		*/
 		
 		
-		
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);?
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);
