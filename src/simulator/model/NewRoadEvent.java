@@ -20,4 +20,9 @@ public abstract class NewRoadEvent extends Event {
 		_maxSpeed = maxSpeed;
 		_weather = weather;
 	}
+	
+	@Override
+	public String toString() {
+		return "New Road'"+_id+"'";
+	}
 }
