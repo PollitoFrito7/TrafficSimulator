@@ -25,4 +25,8 @@ public class SetWeatherEvent extends Event {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "Set weather of roads: "+_ws;	
+	}
 }

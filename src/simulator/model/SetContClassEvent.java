@@ -25,4 +25,9 @@ public class SetContClassEvent extends Event {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "Set contamination class of vehicles: " + _cs;
+	}
+	
 }
