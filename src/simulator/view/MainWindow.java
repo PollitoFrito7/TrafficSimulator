@@ -101,7 +101,7 @@ public class MainWindow extends JFrame {
 	private JPanel createViewPanel(JComponent c, String title) {
 		JPanel p = new JPanel(new BorderLayout());
 		
-		// creation of black border
+		// creation of black border of thickness 2
 		Border border = BorderFactory.createLineBorder(Color.black, 2);
 		p.setBorder(border);
 		return p;
