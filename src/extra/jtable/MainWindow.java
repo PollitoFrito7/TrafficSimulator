@@ -1,39 +1,10 @@
-package extra.jtable;
 
-import java.awt.BorderLayout;
-import java.awt.Frame;
-import java.awt.Color;
-import java.awt.Dimension;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingUtilities;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.Border;
-
-import java.lang.reflect.InvocationTargetException;
-
-//Vamos a sacar los datos de un ArrayList en un JTable
-//Para esto necesitamos un modelo de tabla.
-//Pues no siempre los datos van a venir en un array bidimensional
-//
-// In this example we will show the information stored in an List using
-// a JTable
+/*
 public class MainWindow extends JFrame {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
+//	private static final long serialVersionUID = 1L;
+	private Controller _crtl;
+	
+	
 	private Border _defaultBorder = BorderFactory.createLineBorder(Color.red, 1);
 	private EventsTableModel _model;
 
@@ -42,9 +13,9 @@ public class MainWindow extends JFrame {
 
 	private JTable _eventsTable;
 
-	public MainWindow() {
-
+	public MainWindow(Controller crtl) {
 		super("JTable Example");
+		_crtl = crtl;
 		initGUI();
 	}
 
@@ -121,4 +92,4 @@ public class MainWindow extends JFrame {
 		SwingUtilities.invokeAndWait(() -> new MainWindow());
 	}
 
-}
+}*/
