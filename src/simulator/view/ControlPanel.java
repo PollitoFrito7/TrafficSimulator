@@ -58,6 +58,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		_lefButton.addActionListener((x) -> {
 			lefButtonAction();
 		});
+//		_lefButton.setAlignmentX(LEFT_ALIGNMENT);
 		tb.add(_lefButton);
 		
 		tb.add(Box.createRigidArea(new Dimension(5, 0))); 

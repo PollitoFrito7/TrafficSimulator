@@ -10,6 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import extra.jtable.EventsTableModel;
 import extra.jtable.JunctionsTableModel;
@@ -60,9 +61,6 @@ public class MainWindow extends JFrame {
 		viewsPanel.add(mapsPanel);
 		
 		
-		
-		
-		
 		// tables
 		JPanel eventsView = createViewPanel(new JTable(new EventsTableModel(_ctrl)), "Events");
 		eventsView.setPreferredSize(new Dimension(500, 200));
@@ -85,12 +83,9 @@ public class MainWindow extends JFrame {
 		mapView.setPreferredSize(new Dimension(500, 400));
 		mapsPanel.add(mapView);
 		
-		
 		JPanel mapByRoadComponent = createViewPanel(new MapByRoadComponent(_ctrl), "Map by Road");
 		mapByRoadComponent.setPreferredSize(new Dimension(500, 400));
 		mapsPanel.add(mapByRoadComponent);
-		
-		
 		
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -102,9 +97,13 @@ public class MainWindow extends JFrame {
 	private JPanel createViewPanel(JComponent c, String title) {
 		JPanel p = new JPanel(new BorderLayout());
 		
-		// creation of black border of thickness 2
-		Border border = BorderFactory.createLineBorder(Color.black, 2);
-		p.setBorder(border);
+		// creation of black border of thickness 1
+		Border border = BorderFactory.createLineBorder(Color.black, 1);
+//		p.setBorder(border);
+		
+		Border border1 = BorderFactory.createTitledBorder(border, title);
+		p.setBorder(border1);
+		p.add(new JScrollPane(c));
 		return p;
 		
 	}
