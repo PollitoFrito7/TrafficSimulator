@@ -1,6 +1,8 @@
 package simulator.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,9 +20,7 @@ public class Junction extends SimulatedObject {
 	private int _lastSwitchingTime;
 	private LightSwitchingStrategy _lsStrategy;
 	private DequeuingStrategy _dqStrategy;
-	@SuppressWarnings("unused")
 	private int _xCoord;
-	@SuppressWarnings("unused")
 	private int _yCoord;
 
 	Junction(String id, LightSwitchingStrategy lsStrategy, DequeuingStrategy dqStrategy, int xCoor, int yCoor) {
@@ -44,6 +44,14 @@ public class Junction extends SimulatedObject {
 		_yCoord = yCoor;
 	}
 
+	public int getX() {
+		return _xCoord;
+	}
+	
+	public int getY() {
+		return _yCoord;
+	}
+	
 	protected void addIncommingRoad(Road r) {
 		_inRoads.add(r);
 		_queues.add(new LinkedList<Vehicle>());
@@ -80,6 +88,14 @@ public class Junction extends SimulatedObject {
 		}
 	}
 
+	public int getGreenLightIndex() {
+		return _greenLightIndex;
+	}
+	
+	public List<Road> getInRoads() {
+		return Collections.unmodifiableList(_inRoads);
+	}
+	
 	@Override
 	public JSONObject report() {
 		JSONObject junction = new JSONObject();
@@ -105,4 +121,5 @@ public class Junction extends SimulatedObject {
 
 		return junction;
 	}
+
 }

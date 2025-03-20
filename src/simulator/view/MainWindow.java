@@ -38,10 +38,11 @@ public class MainWindow extends JFrame {
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		this.setContentPane(mainPanel);
 
-		JPanel controlPanel = new JPanel();	// cambiar a ControlPanel cuando la clase esté implementada
+		JPanel controlPanel = new ControlPanel(_ctrl);	
 		JPanel statusPanel = new JPanel();
 		
-		mainPanel.add(controlPanel, BorderLayout.PAGE_START);
+		
+		mainPanel.add(controlPanel, BorderLayout.PAGE_START); // TODO: align this to left
 		mainPanel.add(statusPanel, BorderLayout.PAGE_END);
 		
 		// map view
@@ -84,14 +85,14 @@ public class MainWindow extends JFrame {
 		mapView.setPreferredSize(new Dimension(500, 400));
 		mapsPanel.add(mapView);
 		
-		/*
+		
 		JPanel mapByRoadComponent = createViewPanel(new MapByRoadComponent(_ctrl), "Map by Road");
 		mapByRoadComponent.setPreferredSize(new Dimension(500, 400));
 		mapsPanel.add(mapByRoadComponent);
-		*/
 		
 		
-		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);?
+		
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);
