@@ -120,13 +120,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	private void lefButtonAction() {
 		int returnVal = fc.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-		File le = fc.getSelectedFile();
-		System.out.println("Loading: "
-		+ le.getName());
-		} else {
-		 System.out.println("Load cancelled by user.");
+		File f = fc.getSelectedFile();
 		}
-		
 	}
 
 	private void cccButtonAction() {
