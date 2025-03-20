@@ -41,11 +41,10 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	}
 
 	private void initGUI() {
-		JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		setLayout(new FlowLayout(FlowLayout.LEADING));
 		JPanel tb = new JPanel();
 		JPanel tb2 = new JPanel();
-		tb.setLayout(new BoxLayout(tb, BoxLayout.X_AXIS));
-		tb2.setLayout(new BoxLayout(tb2, BoxLayout.X_AXIS));
+
 		fc = new JFileChooser();
 		
 		tb.add(new JSeparator(SwingConstants.VERTICAL)); 
@@ -112,24 +111,21 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		});
 		tb2.add(_exitButton);
 		
-		wrapper.add(tb);
-		wrapper.add(tb2);
-		wrapper.setAlignmentX(Component.LEFT_ALIGNMENT);
-		wrapper.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		
-		this.add(wrapper);
+		this.add(tb);
+		this.add(tb2);
 	}
 	
 	private void lefButtonAction() {
 		int returnVal = fc.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-		File f = fc.getSelectedFile();
-		FileInputStream is = null;
-		try {
-			is = new FileInputStream(f);
-		} catch (FileNotFoundException e) {}
-		if (is != null)
-			_ctrl.loadEvents(is);
+			File f = fc.getSelectedFile();
+			FileInputStream is = null;
+			try {
+				is = new FileInputStream(f);
+			} catch (FileNotFoundException e) {}
+			if (is != null) {
+				_ctrl.loadEvents(is);
+			}
 		}
 	}
 
@@ -144,8 +140,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	}
 
 	private void runButtonAction() {
-		// TODO Auto-generated method stub
-		
+		_ctrl.run(10);		
 	}
 
 	private void stopButtonAction() {
@@ -164,19 +159,17 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 
 	@Override
 	public void onAdvance(RoadMap map, Collection<Event> events, int time) {
-		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, Collection<Event> events, Event e, int time) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Added");
 	}
 
 	@Override
 	public void onReset(RoadMap map, Collection<Event> events, int time) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

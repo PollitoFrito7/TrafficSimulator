@@ -3,11 +3,11 @@ package extra.jtable;
 public class EventEx {
 
 	private Integer _time;// tiempo en el que se produce el evento
-	private Integer _priority;// respecto de otros eventos
+	private String _desc;// respecto de otros eventos
 
-	public EventEx(Integer time, Integer prioridad) {
+	public EventEx(Integer time, String desc) {
 		_time = time;
-		_priority = prioridad;
+		_desc = desc;
 
 	}
 
@@ -16,8 +16,8 @@ public class EventEx {
 
 	}
 
-	public int getPriority() {
-		return _priority;
+	public String getDesc() {
+		return _desc;
 
 	}
 

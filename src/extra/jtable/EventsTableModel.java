@@ -1,13 +1,17 @@
 package extra.jtable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
 import simulator.control.Controller;
+import simulator.model.Event;
+import simulator.model.RoadMap;
+import simulator.model.TrafficSimObserver;
 
-public class EventsTableModel extends AbstractTableModel {
+public class EventsTableModel extends AbstractTableModel implements TrafficSimObserver{
 
 	/**
 	 * 
@@ -15,10 +19,11 @@ public class EventsTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	private List<EventEx> _events;
-	private String[] _colNames = { "#", "Time", "Priority" };
+	private String[] _colNames = { "#", "Time", "Desc." };
 
 	public EventsTableModel(Controller _ctrl) {		// controller parameter añadido
 		_events = new ArrayList<>();
+		_ctrl.addObserver(this);
 	}
 
 	public void addEvent(EventEx e) {
@@ -83,9 +88,36 @@ public class EventsTableModel extends AbstractTableModel {
 			s = _events.get(rowIndex).getTime();
 			break;
 		case 2:
-			s = _events.get(rowIndex).getPriority();
+			s = _events.get(rowIndex).getDesc();
 			break;
 		}
 		return s;
+	}
+
+	@Override
+	public void onAdvance(RoadMap map, Collection<Event> events, int time) {
+		events.forEach((x) -> {
+			if (x.getTime() < time) {
+				events.remove(x);
+			}
+		});
+		fireTableDataChanged();
+	}
+
+	@Override
+	public void onEventAdded(RoadMap map, Collection<Event> events, Event e, int time) {
+		addEvent(new EventEx(e.getTime(), e.toString()));
+		System.out.println("pingo");
+	}
+
+	@Override
+	public void onReset(RoadMap map, Collection<Event> events, int time) {
+		reset();
+	}
+
+	@Override
+	public void onRegister(RoadMap map, Collection<Event> events, int time) {
+		// TODO Auto-generated method stub
+		
 	}
 }
