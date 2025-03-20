@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Collection;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -121,6 +123,12 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		int returnVal = fc.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 		File f = fc.getSelectedFile();
+		FileInputStream is = null;
+		try {
+			is = new FileInputStream(f);
+		} catch (FileNotFoundException e) {}
+		if (is != null)
+			_ctrl.loadEvents(is);
 		}
 	}
 
