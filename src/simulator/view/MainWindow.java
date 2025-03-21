@@ -43,7 +43,7 @@ public class MainWindow extends JFrame {
 		JPanel statusPanel = new JPanel();
 		
 		
-		mainPanel.add(controlPanel, BorderLayout.PAGE_START); // TODO: align this to left
+		mainPanel.add(controlPanel, BorderLayout.PAGE_START);
 		mainPanel.add(statusPanel, BorderLayout.PAGE_END);
 		
 		// map view

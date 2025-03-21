@@ -3,6 +3,7 @@ package simulator.control;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,6 +13,7 @@ import simulator.factories.Factory;
 import simulator.model.Event;
 import simulator.model.TrafficSimObserver;
 import simulator.model.TrafficSimulator;
+import simulator.model.Vehicle;
 
 public class Controller {
 	private TrafficSimulator _sim;
@@ -50,6 +52,14 @@ public class Controller {
 		for (int i = 0; i < n; i++) {
 			_sim.advance();
 		}
+	}
+	
+	public int getTime() {
+		return _sim.getTime();
+	}	
+	
+	public List<Vehicle> getVehicles() {
+		return _sim.getVehicles();
 	}
 	
 	public void run(int n, OutputStream out) {

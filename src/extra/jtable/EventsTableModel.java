@@ -82,7 +82,7 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 		Object s = null;
 		switch (columnIndex) {
 		case 0:
-			s = rowIndex;
+			s = rowIndex + 1;
 			break;
 		case 1:
 			s = _events.get(rowIndex).getTime();
@@ -96,18 +96,19 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 
 	@Override
 	public void onAdvance(RoadMap map, Collection<Event> events, int time) {
-		events.forEach((x) -> {
+		List<EventEx> delete = new ArrayList();
+		_events.forEach((x) -> {
 			if (x.getTime() < time) {
-				events.remove(x);
+				delete.add(x);
 			}
 		});
+		_events.removeAll(delete);
 		fireTableDataChanged();
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, Collection<Event> events, Event e, int time) {
 		addEvent(new EventEx(e.getTime(), e.toString()));
-		System.out.println("pingo");
 	}
 
 	@Override
@@ -116,8 +117,6 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 	}
 
 	@Override
-	public void onRegister(RoadMap map, Collection<Event> events, int time) {
-		// TODO Auto-generated method stub
-		
+	public void onRegister(RoadMap map, Collection<Event> events, int time) {		
 	}
 }

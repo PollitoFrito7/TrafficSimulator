@@ -1,6 +1,7 @@
 package simulator.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -54,6 +55,14 @@ public class TrafficSimulator implements Observable<TrafficSimObserver>{
 		for (TrafficSimObserver o : _obs) {
 			o.onReset(_roadMap, _events, _simulationTime);
 		}
+	}
+	
+	public int getTime() {
+		return _simulationTime;
+	}
+	
+	public List<Vehicle> getVehicles() {
+		return _roadMap.getVehicles();
 	}
 
 	public JSONObject report() {
