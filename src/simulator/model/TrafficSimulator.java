@@ -1,5 +1,6 @@
 package simulator.model;
 
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -83,6 +84,10 @@ public class TrafficSimulator implements Observable<TrafficSimObserver>{
 	@Override
 	public void removeObserver(TrafficSimObserver o) {
 		_obs.remove(o);
+	}
+
+	public List<Road> getRoads() {
+		return _roadMap.getRoads();
 	}
 
 }

@@ -1,5 +1,6 @@
 package simulator.control;
 
+import java.awt.Component;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -11,6 +12,7 @@ import org.json.JSONTokener;
 
 import simulator.factories.Factory;
 import simulator.model.Event;
+import simulator.model.Road;
 import simulator.model.TrafficSimObserver;
 import simulator.model.TrafficSimulator;
 import simulator.model.Vehicle;
@@ -87,5 +89,9 @@ public class Controller {
 
 	public void reset() {
 		_sim.reset();
+	}
+
+	public List<Road> getRoads() {
+		return _sim.getRoads();
 	}
 }

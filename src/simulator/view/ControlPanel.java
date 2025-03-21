@@ -1,7 +1,6 @@
 package simulator.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,7 +23,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
-import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -35,12 +32,15 @@ import simulator.misc.Pair;
 import simulator.model.Event;
 import simulator.model.RoadMap;
 import simulator.model.SetContClassEvent;
+import simulator.model.SetWeatherEvent;
 import simulator.model.TrafficSimObserver;
-import simulator.model.Vehicle;
+import simulator.model.Weather;
 
+@SuppressWarnings("serial")
 public class ControlPanel extends JPanel implements TrafficSimObserver {
 	private final String iconsPath = "resources/icons/";
-	private final String _cccDescription = "Schedule an event to change the CO2 class of a vehicle after a given number" + "<br>" + "of simulation ticks from now.";
+	private final String _cccDescription = "Schedule an event to change the CO2 class of a vehicle after a given number" + "<br>" + "of simulation ticks from now." + "<br>" + " ‎";
+	private final String _cwDescription = "Schedule an event to change the weather of a road after a given number of" + "<br>" + "simulation ticks from now" + "<br>" + " ‎";
 	private Controller _ctrl;
 	private JFileChooser fc;
 	private JButton _lefButton;
@@ -186,7 +186,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 				}
 				
 				private void initGUI() {
-					setTitle("Change contamination class");
+					setTitle("Change CO2 Class");
 					JPanel mainPanel = new JPanel(new BorderLayout());
 					setContentPane(mainPanel);
 					
@@ -197,6 +197,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 					
 					// choosing and modifying vehicle
 					JPanel bodyPanel = new JPanel();
+					bodyPanel.setLayout(new BoxLayout(bodyPanel, BoxLayout.X_AXIS));
 					
 					JLabel vehicle = new JLabel("Vehicle: ");
 					
@@ -204,6 +205,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 					for ( int i = 0; i < _ctrl.getVehicles().size(); i++) {
 						vehicleArray[i] = _ctrl.getVehicles().get(i).toString();
 					}
+					
+					 
 					
 					_vehicles = new JComboBox<String>(new DefaultComboBoxModel<String>(vehicleArray));
 					if (vehicleArray.length == 0) {
@@ -220,12 +223,19 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 					JLabel tickLabel = new JLabel("Ticks: ");
 					_tickSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1));
 					
+					bodyPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 					bodyPanel.add(vehicle);
+					bodyPanel.add(Box.createRigidArea(new Dimension(5, 0)));
 					bodyPanel.add(_vehicles);
+					bodyPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 					bodyPanel.add(cc);
+					bodyPanel.add(Box.createRigidArea(new Dimension(5, 0)));
 					bodyPanel.add(_contaminationClasses);
+					bodyPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 					bodyPanel.add(tickLabel);
+					bodyPanel.add(Box.createRigidArea(new Dimension(5, 0)));
 					bodyPanel.add(_tickSpinner);
+					bodyPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 					mainPanel.add(bodyPanel, BorderLayout.CENTER);
 					
 					// buttons
@@ -265,7 +275,110 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 
 	private void cwButtonAction() {
 		if (_stopped ) {
-			
+			class CwDialog extends JDialog {
+				private int _status = 0;
+				JComboBox<String> _roads;
+				JComboBox<String> _weathers;
+				JSpinner _tickSpinner;
+				public CwDialog(JFrame frame) {
+					super(frame, true);
+					initGUI();
+				}
+				
+				public int getStatus() {
+					return _status;
+				}
+				
+				private void initGUI() {
+					setTitle("Change Road Weather");
+					JPanel mainPanel = new JPanel(new BorderLayout());
+					setContentPane(mainPanel);
+					
+					// dialog description
+					JLabel dialogDescription = new JLabel();
+					dialogDescription.setText("<html>" + _cwDescription + "</html>");				
+					mainPanel.add(dialogDescription, BorderLayout.PAGE_START);
+					
+					// choosing and modifying vehicle
+					JPanel bodyPanel = new JPanel();
+					bodyPanel.setLayout(new BoxLayout(bodyPanel, BoxLayout.X_AXIS));
+					
+					JLabel road = new JLabel("Road: ");
+					
+					String[] roadArray = new String[_ctrl.getRoads().size()];
+					for ( int i = 0; i < _ctrl.getVehicles().size(); i++) {
+						roadArray[i] = _ctrl.getVehicles().get(i).toString();
+					}
+					
+					 
+					
+					_roads = new JComboBox<String>(new DefaultComboBoxModel<String>(roadArray));
+					if (roadArray.length == 0) {
+						_roads.setSelectedIndex(-1);
+					} else {
+						_roads.setSelectedIndex(0);
+					}
+					
+					JLabel weather = new JLabel("Weather: ");
+					Weather[] ws = Weather.values();
+					String[] weathers = new String[ws.length];
+					for ( int i = 0; i < ws.length; i++) {
+						weathers[i] = ws[i].toString();
+					}
+					
+					_weathers = new JComboBox<String>(new DefaultComboBoxModel<String>(weathers));
+					_weathers.setSelectedIndex(0);
+					
+					JLabel tickLabel = new JLabel("Ticks: ");
+					_tickSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1));
+					
+					bodyPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+					bodyPanel.add(road);
+					bodyPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+					bodyPanel.add(_roads);
+					bodyPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+					bodyPanel.add(weather);
+					bodyPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+					bodyPanel.add(_weathers);
+					bodyPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+					bodyPanel.add(tickLabel);
+					bodyPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+					bodyPanel.add(_tickSpinner);
+					bodyPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+					mainPanel.add(bodyPanel, BorderLayout.CENTER);
+					
+					// buttons
+					JPanel buttonsPanel = new JPanel();
+					JButton cancelButton = new JButton("Cancel"); cancelButton.addActionListener((e) -> {
+					_status = 0; setVisible(false); });
+					buttonsPanel.add(cancelButton);
+					JButton OKButton = new JButton("OK"); OKButton.addActionListener((e) -> {
+					_status = 1; setVisible(false); });
+					buttonsPanel.add(OKButton);
+					mainPanel.add(buttonsPanel, BorderLayout.PAGE_END);
+					this.pack();
+					setVisible(true);
+			 	}
+
+				public Object getSelectedRoad() {
+					return _roads.getSelectedItem();
+				}
+
+				public Object getSelectedWeather() {
+					return _weathers.getSelectedItem();
+				}
+
+				public int extraTicks() {
+					return (int) _tickSpinner.getValue();
+				};
+			}
+		 	
+			CwDialog cwDialog = new CwDialog(new JFrame());
+		 	if (cwDialog.getStatus() == 1 && !_ctrl.getRoads().isEmpty()) {
+		 		List<Pair<String, Weather>> pairList = new ArrayList<>();
+		 		pairList.add(new Pair<>(String.valueOf(cwDialog.getSelectedRoad()), Weather.valueOf(String.valueOf(cwDialog.getSelectedWeather()))));
+		 		_ctrl.addEvent(new SetWeatherEvent(_ctrl.getTime() + cwDialog.extraTicks(), pairList));
+		 	}
 		}
 	}
 
