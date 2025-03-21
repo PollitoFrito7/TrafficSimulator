@@ -255,7 +255,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 			}
 		 	
 			CccDialog cccDialog = new CccDialog(new JFrame());
-		 	if (cccDialog.getStatus()  == 1) {
+		 	if (cccDialog.getStatus() == 1 && !_ctrl.getVehicles().isEmpty()) {
 		 		List<Pair<String, Integer>> pairList = new ArrayList<>();
 		 		pairList.add(new Pair<>(String.valueOf(cccDialog.getSelectedVehicle()), Integer.valueOf(String.valueOf(cccDialog.getSelectedContClass()))));
 		 		_ctrl.addEvent(new SetContClassEvent(_ctrl.getTime() + cccDialog.extraTicks(), pairList));
