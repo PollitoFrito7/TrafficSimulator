@@ -96,7 +96,7 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 
 	@Override
 	public void onAdvance(RoadMap map, Collection<Event> events, int time) {
-		List<EventEx> delete = new ArrayList();
+		List<EventEx> delete = new ArrayList<>();
 		_events.forEach((x) -> {
 			if (x.getTime() < time) {
 				delete.add(x);

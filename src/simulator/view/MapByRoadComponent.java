@@ -7,6 +7,7 @@ import simulator.model.Event;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 
+@SuppressWarnings("serial")
 public class MapByRoadComponent extends JPanel implements TrafficSimObserver {
 
 	public MapByRoadComponent(Controller _ctrl) {

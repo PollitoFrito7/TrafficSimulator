@@ -26,6 +26,7 @@ import javax.swing.border.Border;
 // In this example we will show the information stored in an List using
 // a JTable
 
+@SuppressWarnings("serial")
 public class MainWindow extends JFrame {
 	private Controller _ctrl;
 	
