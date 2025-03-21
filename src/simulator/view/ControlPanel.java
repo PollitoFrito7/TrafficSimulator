@@ -306,8 +306,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 					JLabel road = new JLabel("Road: ");
 					
 					String[] roadArray = new String[_ctrl.getRoads().size()];
-					for ( int i = 0; i < _ctrl.getVehicles().size(); i++) {
-						roadArray[i] = _ctrl.getVehicles().get(i).toString();
+					for ( int i = 0; i < _ctrl.getRoads().size(); i++) {
+						roadArray[i] = _ctrl.getRoads().get(i).toString();
 					}
 					
 					 
