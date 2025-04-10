@@ -149,5 +149,10 @@ public class Vehicle extends SimulatedObject {
 
 		return vehicle;
 	}
+	
+	public int getDist() {
+		return _totalTraveledDist;
+	}
+	
 
 }

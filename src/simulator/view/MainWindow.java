@@ -1,9 +1,9 @@
 package simulator.view;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -12,12 +12,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import extra.jtable.EventsTableModel;
-import extra.jtable.JunctionsTableModel;
-import extra.jtable.RoadsTableModel;
-import extra.jtable.VehiclesTableModel;
-import simulator.control.Controller;
 import javax.swing.border.Border;
+
+import extra.jtable.EventsTableModel;
+import simulator.control.Controller;
 
 //Vamos a sacar los datos de un ArrayList en un JTable
 //Para esto necesitamos un modelo de tabla.
