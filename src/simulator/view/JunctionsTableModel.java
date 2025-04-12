@@ -38,7 +38,7 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 		case 0:
 			return junction.getId();
 		case 1:
-			return (junction.getGreenLightIndex() == -1) ? "NONE" : junction.getInRoads().get(rowIndex).getId();
+			return (junction.getGreenLightIndex() == -1) ? "NONE" : junction.getInRoads().get(junction.getGreenLightIndex()).getId();
 		case 2:
 			return junction.getInRoads();	// queues
 		default:
