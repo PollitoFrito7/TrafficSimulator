@@ -25,9 +25,13 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 	private Image _car;
 	private RoadMap _roadMap;
 	
+	private static final int _JUNCTION_RADIUS = 10;
+	
 	private static final Color _SOURCE_JUNCTION = Color.BLUE;
 	private static final Color _BACKGROUND_COLOR = Color.WHITE;
 	private static final Color _ROAD_LINE = Color.BLACK;
+	private static final Color _DEST_JUNCT_RED = Color.RED;
+	private static final Color _DEST_JUNCT_GREEN = Color.GREEN;
 	
 	public MapByRoadComponent(Controller ctrl) {
 		initGUI();
@@ -61,8 +65,31 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 	private void drawMap(Graphics2D g) {
 		drawRoads(g);
 //		drawVehicles(g);
-//		drawJunctions(g);
+		drawJunctions(g);
 		
+	}
+
+	private void drawJunctions(Graphics2D g) {
+		for (int i = 0; i < _roadMap.getRoads().size(); i++) {
+			Road road = _roadMap.getRoads().get(i);
+			int x1 = 50;
+			int x2 = getWidth() - 100;
+			int y = (i + 1)* 50;
+			
+			g.setColor(_SOURCE_JUNCTION);
+			g.fillOval(x1 - _JUNCTION_RADIUS / 2, y - _JUNCTION_RADIUS / 2, _JUNCTION_RADIUS, _JUNCTION_RADIUS);
+		
+			Junction junctDest = road.getDest();
+			int greenIdx = junctDest.getGreenLightIndex();
+			Color endColorJunct = _DEST_JUNCT_RED;
+			if(greenIdx != -1 && road.equals(junctDest.getInRoads().get(greenIdx))) {
+				endColorJunct = _DEST_JUNCT_GREEN;
+			}
+			
+			g.setColor(endColorJunct);
+			g.fillOval(x2 - _JUNCTION_RADIUS / 2, y - _JUNCTION_RADIUS / 2, _JUNCTION_RADIUS, _JUNCTION_RADIUS);
+			
+		}
 	}
 
 	private void drawRoads(Graphics2D g) {
@@ -75,7 +102,6 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 			g.drawLine(x1, y, x2, y);
 			g.drawString(_roadMap.getRoads().get(i).getId(), x1 - 30, y);
 		}
-		
 	}
 
 	private void updatePrefferedSize() {
