@@ -9,6 +9,7 @@ import java.awt.RenderingHints;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
@@ -20,6 +21,8 @@ import simulator.model.Junction;
 import simulator.model.Road;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
+import simulator.model.Vehicle;
+import simulator.model.Weather;
 
 public class MapByRoadComponent extends JComponent implements TrafficSimObserver {
 	private Image _car;
@@ -64,10 +67,10 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 	
 	private void drawMap(Graphics2D g) {
 		drawRoads(g);
-//		drawVehicles(g);
 		drawJunctions(g);
 		
 	}
+
 
 	private void drawJunctions(Graphics2D g) {
 		for (int i = 0; i < _roadMap.getRoads().size(); i++) {
@@ -98,13 +101,47 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 
 	private void drawRoads(Graphics2D g) {
 		for (int i = 0; i < _roadMap.getRoads().size(); i++) {
+			Road road = _roadMap.getRoads().get(i);
 			int x1 = 50;
 			int x2 = getWidth() - 100;
 			int y = (i+1)*50;
 			
 			g.setColor(_ROAD_LINE);
 			g.drawLine(x1, y, x2, y);
-			g.drawString(_roadMap.getRoads().get(i).getId(), x1 - 30, y);
+			g.drawString(road.getId(), x1 - 30, y);
+			
+			//vehicles ç
+			List<Vehicle> vehicles = road.getVehicles();
+			for (int j = 0; j < vehicles.size(); j++) {
+				int x = x1 + (int) ((x2 - x1) * ((double) vehicles.get(j).getLocation() / (double) _roadMap.getRoads().get(j).getLength()));
+				g.drawImage(_car, x, y - 10, 16, 16, this);
+				g.drawString(vehicles.get(j).getId(), x, y - 16);
+			}
+			
+			Image weatherImg = null;
+			
+			if(road.getWeather() == Weather.CLOUDY) {
+				weatherImg = loadImage("cloud.png");
+			}
+			else if(road.getWeather() == Weather.RAINY) {
+				weatherImg = loadImage("rain.png");
+			}
+			else if(road.getWeather() == Weather.STORM) {
+				weatherImg = loadImage("storm.png");
+			}
+			else if(road.getWeather() == Weather.SUNNY) {
+				weatherImg = loadImage("sun.png");
+			}
+			else if(road.getWeather() == Weather.WINDY) {
+				weatherImg = loadImage("wind.png");
+			}
+			if (weatherImg != null) {
+				g.drawImage(weatherImg, getWidth()- 90, y - 20, 32, 32, this);				
+			}
+			
+			int c = (int) Math.floor(Math.min((double) road.getTotalCO2()/(1.0 + (double) road.getContLimit()),1.0) / 0.19);
+			
+			g.drawImage(loadImage("cont_" + Integer.toString(c) + ".png"), getWidth() - 58, y - 20, 32, 32, this);
 		}
 	}
 

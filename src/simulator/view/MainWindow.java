@@ -13,8 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.Border;
-
-import extra.jtable.EventsTableModel;
 import simulator.control.Controller;
 
 //Vamos a sacar los datos de un ArrayList en un JTable

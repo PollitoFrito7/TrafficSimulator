@@ -39,6 +39,7 @@ import simulator.model.Weather;
 @SuppressWarnings("serial")
 public class ControlPanel extends JPanel implements TrafficSimObserver {
 	private final String iconsPath = "resources/icons/";
+	private final String FilesPath = "resources/examples/";
 	private final String _cccDescription = "Schedule an event to change the CO2 class of a vehicle after a given number" + "<br>" + "of simulation ticks from now." + "<br>" + " ‎";
 	private final String _cwDescription = "Schedule an event to change the weather of a road after a given number of" + "<br>" + "simulation ticks from now" + "<br>" + " ‎";
 	private Controller _ctrl;
@@ -61,19 +62,15 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	}
 
 	private void initGUI() {
-		setLayout(new FlowLayout(FlowLayout.LEADING));
-		JPanel tb = new JPanel();
-		tb.setLayout(new BoxLayout(tb, BoxLayout.X_AXIS));
-		JPanel tb2 = new JPanel();
-		tb2.setLayout(new BoxLayout(tb2, BoxLayout.X_AXIS));
+		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
 		_stopped = true;
-		fc = new JFileChooser();
+		fc = new JFileChooser(FilesPath);
 		
-		tb.add(new JSeparator(SwingConstants.VERTICAL)); 
-		tb.add(Box.createRigidArea(new Dimension(2, 0))); 
-		tb.add(new JSeparator(SwingConstants.VERTICAL)); 
-		tb.add(Box.createRigidArea(new Dimension(5, 0))); 
+		add(new JSeparator(SwingConstants.VERTICAL)); 
+		add(Box.createRigidArea(new Dimension(2, 0))); 
+		add(new JSeparator(SwingConstants.VERTICAL)); 
+		add(Box.createRigidArea(new Dimension(5, 0))); 
 		
 		// load event file button
 		_lefButton = new JButton();
@@ -82,11 +79,11 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		_lefButton.addActionListener((x) -> {
 			lefButtonAction();
 		});
-		tb.add(_lefButton);
+		add(_lefButton);
 		
-		tb.add(Box.createRigidArea(new Dimension(5, 0))); 
-		tb.add(new JSeparator(SwingConstants.VERTICAL)); 
-		tb.add(Box.createRigidArea(new Dimension(5, 0)));
+		add(Box.createRigidArea(new Dimension(5, 0))); 
+		add(new JSeparator(SwingConstants.VERTICAL)); 
+		add(Box.createRigidArea(new Dimension(5, 0)));
 		
 		// change contamination class button
 		_cccButton = new JButton();
@@ -95,7 +92,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		_cccButton.addActionListener((x) -> {
 			cccButtonAction();
 		});
-		tb.add(_cccButton);
+		add(_cccButton);
 		
 		// change weather button
 		_cwButton = new JButton();
@@ -104,11 +101,11 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		_cwButton.addActionListener((x) -> {
 			cwButtonAction();
 		});
-		tb.add(_cwButton);
+		add(_cwButton);
 		
-		tb.add(Box.createRigidArea(new Dimension(5, 0))); 
-		tb.add(new JSeparator(SwingConstants.VERTICAL)); 
-		tb.add(Box.createRigidArea(new Dimension(5, 0)));
+		add(Box.createRigidArea(new Dimension(5, 0))); 
+		add(new JSeparator(SwingConstants.VERTICAL)); 
+		add(Box.createRigidArea(new Dimension(5, 0)));
 		
 		// run button
 		_runButton = new JButton();
@@ -117,7 +114,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		_runButton.addActionListener((x) -> {
 			runButtonAction();
 		});
-		tb.add(_runButton);
+		add(_runButton);
 		
 		// stop button
 		_stopButton = new JButton();	
@@ -126,19 +123,18 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		_stopButton.addActionListener((x) -> {
 			stopButtonAction();
 		});
-		tb.add(_stopButton);
+		add(_stopButton);
 		
-		tb.add(Box.createRigidArea(new Dimension(5, 0))); 
+		add(Box.createRigidArea(new Dimension(5, 0))); 
 		
 		// tick label and spinner
 		_tickLabel = new JLabel("Ticks: ");
 		_tickSpinner = new JSpinner(new SpinnerNumberModel(10, 1, 1000, 1));
-		tb.add(_tickLabel);
-		tb.add(_tickSpinner);
+		_tickSpinner.setMaximumSize(new Dimension(80, 100));
+		add(_tickLabel);
+		add(_tickSpinner);
 		
-		tb.add(Box.createRigidArea(new Dimension(10, 0))); 
-		tb.add(new JSeparator(SwingConstants.VERTICAL)); 
-		tb.add(Box.createRigidArea(new Dimension(5, 0)));
+		add(Box.createRigidArea(new Dimension(10, 0))); 
 		
 		// exit button
 		_exitButton = new JButton();
@@ -147,10 +143,11 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		_exitButton.addActionListener((x) -> {
 			exitButtonAction();
 		});
-		tb2.add(_exitButton);		
-		
-		this.add(tb);
-		this.add(tb2);
+		add(Box.createHorizontalGlue());
+		add(new JSeparator(SwingConstants.VERTICAL)); 
+		add(Box.createRigidArea(new Dimension(5, 0)));
+		_exitButton.setAlignmentX(RIGHT_ALIGNMENT);
+		add(_exitButton);		
 	}
 	
 	private void lefButtonAction() {
@@ -163,6 +160,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 					is = new FileInputStream(f);
 				} catch (FileNotFoundException e) {}
 				if (is != null) {
+					_ctrl.reset();
 					_ctrl.loadEvents(is);
 				}
 			}			
