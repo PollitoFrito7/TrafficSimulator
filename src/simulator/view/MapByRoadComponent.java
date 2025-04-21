@@ -110,7 +110,7 @@ public class MapByRoadComponent extends JComponent implements TrafficSimObserver
 			g.drawLine(x1, y, x2, y);
 			g.drawString(road.getId(), x1 - 30, y);
 			
-			//vehicles ç
+			//vehicles 
 			List<Vehicle> vehicles = road.getVehicles();
 			for (int j = 0; j < vehicles.size(); j++) {
 				int x = x1 + (int) ((x2 - x1) * ((double) vehicles.get(j).getLocation() / (double) _roadMap.getRoads().get(j).getLength()));

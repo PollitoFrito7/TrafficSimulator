@@ -2,13 +2,13 @@ package simulator.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.util.List;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -62,15 +62,26 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	}
 
 	private void initGUI() {
+		// natural look of the GUI
+		try {
+			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getCrossPlatformLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		setOpaque(false);
 
 		_stopped = true;
 		fc = new JFileChooser(FilesPath);
 		
+		add(Box.createRigidArea(new Dimension(5, 0)));
+		
+		/*
 		add(new JSeparator(SwingConstants.VERTICAL)); 
 		add(Box.createRigidArea(new Dimension(2, 0))); 
 		add(new JSeparator(SwingConstants.VERTICAL)); 
-		add(Box.createRigidArea(new Dimension(5, 0))); 
+		add(Box.createRigidArea(new Dimension(5, 0))); */
 		
 		// load event file button
 		_lefButton = new JButton();
@@ -82,8 +93,10 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		add(_lefButton);
 		
 		add(Box.createRigidArea(new Dimension(5, 0))); 
+		
+		/*
 		add(new JSeparator(SwingConstants.VERTICAL)); 
-		add(Box.createRigidArea(new Dimension(5, 0)));
+		add(Box.createRigidArea(new Dimension(5, 0)));*/
 		
 		// change contamination class button
 		_cccButton = new JButton();
@@ -104,8 +117,10 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		add(_cwButton);
 		
 		add(Box.createRigidArea(new Dimension(5, 0))); 
+		
+		/*
 		add(new JSeparator(SwingConstants.VERTICAL)); 
-		add(Box.createRigidArea(new Dimension(5, 0)));
+		add(Box.createRigidArea(new Dimension(5, 0)));*/
 		
 		// run button
 		_runButton = new JButton();
@@ -130,7 +145,8 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		// tick label and spinner
 		_tickLabel = new JLabel("Ticks: ");
 		_tickSpinner = new JSpinner(new SpinnerNumberModel(10, 1, 1000, 1));
-		_tickSpinner.setMaximumSize(new Dimension(80, 100));
+//		_tickSpinner.setMaximumSize(new Dimension(80, 100));
+		_tickSpinner.setMaximumSize(new Dimension(60, 30));
 		add(_tickLabel);
 		add(_tickSpinner);
 		
@@ -144,9 +160,10 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 			exitButtonAction();
 		});
 		add(Box.createHorizontalGlue());
+		/*
 		add(new JSeparator(SwingConstants.VERTICAL)); 
 		add(Box.createRigidArea(new Dimension(5, 0)));
-		_exitButton.setAlignmentX(RIGHT_ALIGNMENT);
+		_exitButton.setAlignmentX(RIGHT_ALIGNMENT);*/
 		add(_exitButton);		
 	}
 	
