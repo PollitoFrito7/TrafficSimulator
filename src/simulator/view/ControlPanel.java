@@ -77,12 +77,6 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		
 		add(Box.createRigidArea(new Dimension(5, 0)));
 		
-		/*
-		add(new JSeparator(SwingConstants.VERTICAL)); 
-		add(Box.createRigidArea(new Dimension(2, 0))); 
-		add(new JSeparator(SwingConstants.VERTICAL)); 
-		add(Box.createRigidArea(new Dimension(5, 0))); */
-		
 		// load event file button
 		_lefButton = new JButton();
 		_lefButton.setIcon( new ImageIcon(iconsPath + "open.png") );
@@ -93,10 +87,6 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		add(_lefButton);
 		
 		add(Box.createRigidArea(new Dimension(5, 0))); 
-		
-		/*
-		add(new JSeparator(SwingConstants.VERTICAL)); 
-		add(Box.createRigidArea(new Dimension(5, 0)));*/
 		
 		// change contamination class button
 		_cccButton = new JButton();
@@ -117,10 +107,6 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		add(_cwButton);
 		
 		add(Box.createRigidArea(new Dimension(5, 0))); 
-		
-		/*
-		add(new JSeparator(SwingConstants.VERTICAL)); 
-		add(Box.createRigidArea(new Dimension(5, 0)));*/
 		
 		// run button
 		_runButton = new JButton();
@@ -145,7 +131,6 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 		// tick label and spinner
 		_tickLabel = new JLabel("Ticks: ");
 		_tickSpinner = new JSpinner(new SpinnerNumberModel(10, 1, 1000, 1));
-//		_tickSpinner.setMaximumSize(new Dimension(80, 100));
 		_tickSpinner.setMaximumSize(new Dimension(60, 30));
 		add(_tickLabel);
 		add(_tickSpinner);
@@ -160,10 +145,6 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 			exitButtonAction();
 		});
 		add(Box.createHorizontalGlue());
-		/*
-		add(new JSeparator(SwingConstants.VERTICAL)); 
-		add(Box.createRigidArea(new Dimension(5, 0)));
-		_exitButton.setAlignmentX(RIGHT_ALIGNMENT);*/
 		add(_exitButton);		
 	}
 	
@@ -220,8 +201,6 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 					for ( int i = 0; i < _ctrl.getVehicles().size(); i++) {
 						vehicleArray[i] = _ctrl.getVehicles().get(i).toString();
 					}
-					
-					 
 					
 					_vehicles = new JComboBox<String>(new DefaultComboBoxModel<String>(vehicleArray));
 					if (vehicleArray.length == 0) {
@@ -324,8 +303,6 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 					for ( int i = 0; i < _ctrl.getRoads().size(); i++) {
 						roadArray[i] = _ctrl.getRoads().get(i).toString();
 					}
-					
-					 
 					
 					_roads = new JComboBox<String>(new DefaultComboBoxModel<String>(roadArray));
 					if (roadArray.length == 0) {
