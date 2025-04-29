@@ -14,7 +14,7 @@ import simulator.model.TrafficSimObserver;
 public class EventsTableModel extends AbstractTableModel implements TrafficSimObserver {
 	private List<Event> _events;
 
-	public EventsTableModel(Controller _ctrl) {		// controller parameter añadido
+	public EventsTableModel(Controller _ctrl) {		// controller parameter added
 		_events = new ArrayList<>();
 		_ctrl.addObserver(this);
 	}
