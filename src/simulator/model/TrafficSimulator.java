@@ -21,6 +21,7 @@ public class TrafficSimulator implements Observable<TrafficSimObserver>{
 
 	public void addEvent(Event e) {
 		_events.add(e);
+
 		for (TrafficSimObserver o : _obs) {
 			o.onEventAdded(_roadMap, _events, e, _simulationTime);
 		}
@@ -59,10 +60,6 @@ public class TrafficSimulator implements Observable<TrafficSimObserver>{
 	public int getTime() {
 		return _simulationTime;
 	}
-	
-	public List<Vehicle> getVehicles() {
-		return _roadMap.getVehicles();
-	}
 
 	public JSONObject report() {
 		JSONObject simulator = new JSONObject();
@@ -83,9 +80,4 @@ public class TrafficSimulator implements Observable<TrafficSimObserver>{
 	public void removeObserver(TrafficSimObserver o) {
 		_obs.remove(o);
 	}
-
-	public List<Road> getRoads() {
-		return _roadMap.getRoads();
-	}
-
 }

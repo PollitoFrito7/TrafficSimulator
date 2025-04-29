@@ -111,10 +111,13 @@ public class Main {
 		}
 	}
 	
-	private static void parseModeOption(CommandLine line) {
+	private static void parseModeOption(CommandLine line) throws ParseException {
 		String mode = line.getOptionValue("m");
 		if (mode != null && mode.equals("console")) {
 			_mode = true;
+		}
+		else if (mode != null && !mode.equals("gui")) {
+			throw new ParseException("Not a valid mode:" + mode);
 		}
 	}
 

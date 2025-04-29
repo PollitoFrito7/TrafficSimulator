@@ -6,11 +6,15 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import org.json.JSONArray;
+
 import simulator.control.Controller;
 import simulator.model.Event;
 import simulator.model.Junction;
+import simulator.model.Road;
 import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
+import simulator.model.Vehicle;
 
 public class JunctionsTableModel extends AbstractTableModel implements TrafficSimObserver {
 	private List<Junction> _junctions;
@@ -40,7 +44,21 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 		case 1:
 			return (junction.getGreenLightIndex() == -1) ? "NONE" : junction.getInRoads().get(junction.getGreenLightIndex()).getId();
 		case 2:
-			return junction.getInRoads();	// queues
+			String roads = "";
+			for (Road r : junction.getInRoads()) {
+				roads += r.getId() + ":[";
+				for (Vehicle v : r.getVehicles()) {
+					roads += v.getId() + ",";
+				}
+				
+				if (!r.getVehicles().isEmpty()) {
+					roads = roads.substring(0, roads.length() - 1);					
+				}
+				
+				roads += "], ";
+			}
+			
+			return roads;
 		default:
 			return null;
 		}

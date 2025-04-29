@@ -59,10 +59,6 @@ public class Controller {
 		return _sim.getTime();
 	}	
 	
-	public List<Vehicle> getVehicles() {
-		return _sim.getVehicles();
-	}
-	
 	public void run(int n, OutputStream out) {
 		PrintStream p = new PrintStream(out);
 
@@ -88,9 +84,5 @@ public class Controller {
 
 	public void reset() {
 		_sim.reset();
-	}
-
-	public List<Road> getRoads() {
-		return _sim.getRoads();
 	}
 }

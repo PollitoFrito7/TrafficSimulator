@@ -45,12 +45,13 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 	@Override
 	public void onAdvance(RoadMap map, Collection<Event> events, int time) {
 		_events = new ArrayList<>(events);
-		fireTableStructureChanged();	
+		_events.sort(null);
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, Collection<Event> events, Event e, int time) {
-		_events.add(e);
+		_events = new ArrayList<>(events);
+		_events.sort(null);
 		fireTableDataChanged();
 	}
 
@@ -61,7 +62,7 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 	}
 
 	@Override
-	public void onRegister(RoadMap map, Collection<Event> events, int time) {
+	public void onRegister(RoadMap map, Collection<Event> events, int time) { // with no events it shouldn't display
 	}
 	
 	@Override
