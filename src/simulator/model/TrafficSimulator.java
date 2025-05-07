@@ -56,10 +56,6 @@ public class TrafficSimulator implements Observable<TrafficSimObserver>{
 			o.onReset(_roadMap, _events, _simulationTime);
 		}
 	}
-	
-	public int getTime() {
-		return _simulationTime;
-	}
 
 	public JSONObject report() {
 		JSONObject simulator = new JSONObject();

@@ -47,11 +47,11 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 			String roads = "";
 			for (Road r : junction.getInRoads()) {
 				roads += r.getId() + ":[";
-				for (Vehicle v : r.getVehicles()) {
+				for (Vehicle v : junction.getQueueByRoad(r)) {
 					roads += v.getId() + ",";
 				}
 				
-				if (!r.getVehicles().isEmpty()) {
+				if (!junction.getQueueByRoad(r).isEmpty()) {
 					roads = roads.substring(0, roads.length() - 1);					
 				}
 				

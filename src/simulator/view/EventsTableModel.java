@@ -15,7 +15,6 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 	private List<Event> _events;
 
 	public EventsTableModel(Controller _ctrl) {		// controller parameter added
-		_events = new ArrayList<>();
 		_ctrl.addObserver(this);
 	}
 
@@ -45,13 +44,11 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 	@Override
 	public void onAdvance(RoadMap map, Collection<Event> events, int time) {
 		_events = new ArrayList<>(events);
-		_events.sort(null);
 	}
 
 	@Override
 	public void onEventAdded(RoadMap map, Collection<Event> events, Event e, int time) {
 		_events = new ArrayList<>(events);
-		_events.sort(null);
 		fireTableDataChanged();
 	}
 
@@ -62,7 +59,8 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 	}
 
 	@Override
-	public void onRegister(RoadMap map, Collection<Event> events, int time) { // with no events it shouldn't display
+	public void onRegister(RoadMap map, Collection<Event> events, int time) { 
+		_events = new ArrayList<>();
 	}
 	
 	@Override

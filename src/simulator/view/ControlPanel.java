@@ -55,10 +55,12 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	private boolean _stopped;
 	private List<Vehicle> _vehicles;
 	private List<Road> _roads;
+	private int _time;
 
 	public ControlPanel(Controller ctrl) {
 		super();
 		_ctrl = ctrl;
+		_time = 0;
 		_ctrl.addObserver(this);
 		initGUI();
 	}
@@ -173,7 +175,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 			List<Pair<String, Integer>> pairList = new ArrayList<>();
 			pairList.add(new Pair<>(String.valueOf(cccDialog.getSelectedVehicle()),
 					Integer.valueOf(String.valueOf(cccDialog.getSelectedContClass()))));
-			_ctrl.addEvent(new SetContClassEvent(_ctrl.getTime() + cccDialog.extraTicks(), pairList));
+			_ctrl.addEvent(new SetContClassEvent(_time + cccDialog.extraTicks(), pairList));
 		}
 
 	}
@@ -184,7 +186,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 			List<Pair<String, Weather>> pairList = new ArrayList<>();
 			pairList.add(new Pair<>(String.valueOf(cwDialog.getSelectedRoad()),
 					Weather.valueOf(String.valueOf(cwDialog.getSelectedWeather()))));
-			_ctrl.addEvent(new SetWeatherEvent(_ctrl.getTime() + cwDialog.extraTicks(), pairList));
+			_ctrl.addEvent(new SetWeatherEvent(_time + cwDialog.extraTicks(), pairList));
 		}
 
 	}
@@ -241,6 +243,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	public void onAdvance(RoadMap map, Collection<Event> events, int time) {
 		_vehicles = map.getVehicles();
 		_roads = map.getRoads();
+		_time = time;
 	}
 
 	@Override
@@ -252,11 +255,13 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
 	public void onReset(RoadMap map, Collection<Event> events, int time) {
 		_vehicles = map.getVehicles();
 		_roads = map.getRoads();
+		_time = time;
 	}
 
 	@Override
 	public void onRegister(RoadMap map, Collection<Event> events, int time) {
 		_vehicles = map.getVehicles();
 		_roads = map.getRoads();
+		_time = time;
 	}
 }

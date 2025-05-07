@@ -55,10 +55,6 @@ public class Controller {
 		}
 	}
 	
-	public int getTime() {
-		return _sim.getTime();
-	}	
-	
 	public void run(int n, OutputStream out) {
 		PrintStream p = new PrintStream(out);
 

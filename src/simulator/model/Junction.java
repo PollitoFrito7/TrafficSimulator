@@ -95,6 +95,10 @@ public class Junction extends SimulatedObject {
 		return Collections.unmodifiableList(_inRoads);
 	}
 	
+	public List<Vehicle> getQueueByRoad(Road road) {
+		return Collections.unmodifiableList(_queueByRoad.get(road));
+	}
+	
 	@Override
 	public JSONObject report() {
 		JSONObject junction = new JSONObject();
